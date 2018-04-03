@@ -3,7 +3,7 @@ const path = require('path');
 exports.createPages = ({ boundActionCreators, graphql }) => {
   const { createPage } = boundActionCreators;
 
-  const albumTemplate = path.resolve(`src/templates/album.js`);
+  const galleryTemplate = path.resolve(`src/templates/gallery.js`);
 
   return graphql(`
     query AlbumQuery {
@@ -24,11 +24,9 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
     result.data.allFile.group.map(album => {
       const { fieldValue: name, edges: images } = album;
 
-      //   console.log(name, images);
-
       createPage({
         path: name,
-        component: albumTemplate,
+        component: galleryTemplate,
         context: { name },
       });
     });
