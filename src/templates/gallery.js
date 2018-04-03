@@ -9,12 +9,21 @@ import { style } from 'styled-system/dist/util';
 const GalleryContainer = styled.div`
   ${space};
   ${color};
-  height: 100vh;
-  position: relative;
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 5px;
+  right: 5px;
 `;
 
 const Image = styled.div`
   ${space};
+
+  align-items: center;
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+
   ${props =>
     props.invisible &&
     css`
@@ -24,7 +33,7 @@ const Image = styled.div`
 
 const Prev = styled.div`
   cursor: w-resize;
-  height: 100vh;
+  height: 100%;
   position: absolute;
   left: 0;
   top: 0;
@@ -41,7 +50,7 @@ const Next = styled(Prev)`
 const Template = ({ data, pathContext: { name }, imageIndex, next, prev }) => {
   const { allFile: { edges: images } } = data;
   return (
-    <GalleryContainer bg="white" p={4} mr={3}>
+    <GalleryContainer bg="white" p={6}>
       <Helmet title={`${name} - Album`} />
       <Prev onClick={() => prev()} />
       {images.map((image, index) => {
@@ -49,7 +58,7 @@ const Template = ({ data, pathContext: { name }, imageIndex, next, prev }) => {
           node: { childImageSharp: { sizes, internal: { contentDigest } } },
         } = image;
         return (
-          <Image key={contentDigest} mb={2} invisible={index !== imageIndex}>
+          <Image key={contentDigest} invisible={index !== imageIndex}>
             <Img sizes={sizes} />
           </Image>
         );

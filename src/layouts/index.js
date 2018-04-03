@@ -17,9 +17,7 @@ const TemplateWrapper = ({ children }) => (
           { name: 'keywords', content: 'sample, something' },
         ]}
       />
-      <Background bg="black" p={1}>
-        {children()}
-      </Background>
+      <Background bg="black">{children()}</Background>
     </div>
   </ThemeProvider>
 );
