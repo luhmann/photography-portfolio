@@ -22,6 +22,7 @@ const Image = styled.div`
   align-items: center;
   display: flex;
   height: 100%;
+  position: relative;
   overflow: hidden;
 
   ${props =>
@@ -59,7 +60,13 @@ const Template = ({ data, pathContext: { name }, imageIndex, next, prev }) => {
         } = image;
         return (
           <Image key={contentDigest} invisible={index !== imageIndex}>
-            <Img sizes={sizes} />
+            <Img
+              sizes={sizes}
+              style={{ height: '100%' }}
+              imgStyle={{
+                objectFit: 'contain',
+              }}
+            />
           </Image>
         );
       })}
@@ -91,7 +98,7 @@ export const pageQuery = graphql`
             internal {
               contentDigest
             }
-            sizes(maxWidth: 2500) {
+            sizes(maxWidth: 2500, quality: 75) {
               ...GatsbyImageSharpSizes_withWebp
             }
           }
