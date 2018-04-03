@@ -10,3 +10,8 @@ html {
 * {
   box-sizing: border-box;
 }
+
+.gatsby-image-outer-wrapper {
+  width: 100%;
+  /* height: 100%; */
+}

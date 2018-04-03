@@ -4,8 +4,10 @@ import { color, space } from 'styled-system';
 const Background = styled.main`
   ${color};
   ${space};
-  min-height: 100vh;
+  height: 100vh;
   width: 100vw;
+  overflow: hidden;
+  position: relative;
 `;
 
 export default Background;
