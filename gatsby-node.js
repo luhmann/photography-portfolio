@@ -13,15 +13,6 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
       ) {
         group(field: relativeDirectory) {
           fieldValue
-          edges {
-            node {
-              childImageSharp {
-                sizes(maxWidth: 2500) {
-                  ...GatsbyImageSharpSizes_withWebp
-                }
-              }
-            }
-          }
         }
       }
     }
@@ -38,7 +29,7 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
       createPage({
         path: name,
         component: albumTemplate,
-        context: { images, name },
+        context: { name },
       });
     });
   });
