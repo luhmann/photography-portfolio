@@ -11,8 +11,10 @@ module.exports = {
         path: `${__dirname}/data/`,
       },
     },
-    // Parse all images files
+    // parse all images files
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    // enable styled components
+    `gatsby-plugin-styled-components`,
   ],
-}
+};
