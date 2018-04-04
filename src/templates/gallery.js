@@ -6,16 +6,15 @@ import { dec, ifElse, inc, partialCurry } from 'rambda';
 import { withStateHandlers } from 'recompose';
 import styled, { css } from 'styled-components';
 import { color, space } from 'styled-system';
-import { style } from 'styled-system/dist/util';
 
 const GalleryContainer = styled.div`
   ${space};
   ${color};
   position: absolute;
-  top: 5px;
-  bottom: 5px;
-  left: 5px;
-  right: 5px;
+  top: 6px;
+  bottom: 6px;
+  left: 6px;
+  right: 6px;
 `;
 
 const Image = styled.div`
@@ -54,6 +53,7 @@ const Gallery = ({ data, pathContext: { name }, imageIndex, next, prev }) => {
   const { allFile: { edges: images } } = data;
   const curNext = partialCurry(next, { totalImages: images.length });
   const curPrev = partialCurry(prev, { totalImages: images.length });
+
   return (
     <GalleryContainer bg="white" p={6}>
       <Helmet title={`${name} - Album`} />
@@ -79,11 +79,12 @@ const Gallery = ({ data, pathContext: { name }, imageIndex, next, prev }) => {
   );
 };
 
-Gallery.PropTypes = {
+Gallery.propTypes = {
   data: PropTypes.shape({
     allFile: PropTypes.shape({ edges: PropTypes.arrayOf(PropTypes.object) }),
-  }),
-  pathContext: PropTypes.shape({ name: PropTypes.string.isRequired }),
+  }).isRequired,
+  pathContext: PropTypes.shape({ name: PropTypes.string.isRequired })
+    .isRequired,
   imageIndex: PropTypes.number.isRequired,
   next: PropTypes.func.isRequired,
   prev: PropTypes.func.isRequired,
@@ -108,12 +109,14 @@ export default withStateHandlers(
         () => ({ imageIndex: dec(imageIndex) }),
         ({ totalImages }) => ({ imageIndex: dec(totalImages) })
       ),
-    showIndex: ({ imageIndex }) => ({ nextIndex }) => ({
+    showIndex: () => ({ nextIndex }) => ({
       imageIndex: nextIndex,
     }),
   }
 )(Gallery);
 
+// Disabling eslint linting for graphql-global but only here
+/* eslint-disable-next-line */
 export const pageQuery = graphql`
   query ImagesByPath($name: String!) {
     allFile(
