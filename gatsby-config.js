@@ -11,10 +11,12 @@ module.exports = {
         path: `${__dirname}/data/`,
       },
     },
-    // parse all images files
+    // Parse all images files
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    // enable styled components
+    // Enable styled components
     `gatsby-plugin-styled-components`,
+    // Use Gatsby with React 16, can be removed once gatsby v2 comes out
+    `gatsby-plugin-react-next`,
   ],
 };
