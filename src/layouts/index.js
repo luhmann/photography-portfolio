@@ -7,7 +7,7 @@ import theme from '../theme';
 import { Background, Logo, Menu, StyledLink } from '../components/';
 import './index.css';
 
-const TemplateWrapper = ({ children }) => (
+const Layout = ({ children }) => (
   <ThemeProvider theme={theme}>
     <div>
       <Helmet>
@@ -30,10 +30,10 @@ const TemplateWrapper = ({ children }) => (
   </ThemeProvider>
 );
 
-TemplateWrapper.propTypes = {
+Layout.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
-TemplateWrapper.displayName = 'TemplateWrapper';
+Layout.displayName = 'TemplateWrapper';
 
-export default TemplateWrapper;
+export default Layout;
