@@ -56,7 +56,7 @@ const Gallery = ({ data, pathContext: { name }, imageIndex, next, prev }) => {
 
   return (
     <GalleryContainer bg="white" p={6}>
-      <Helmet title={`${name} - Album`} />
+      <Helmet title={`${name} - JF Dietrich Photography`} />
       <Prev onClick={() => curPrev()} />
       {images.map((image, index) => {
         const {

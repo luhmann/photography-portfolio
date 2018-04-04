@@ -6,9 +6,10 @@ const Logo = styled.h1`
   ${space};
   ${fontFamily};
   ${fontSize};
+  font-weight: 200;
   position: absolute;
-  top: ${themeGet('space.3')}px;
-  left: ${themeGet('space.3')}px;
+  top: ${themeGet('space.2')}px;
+  left: ${themeGet('space.4')}px;
   z-index: ${themeGet('zIndex.high')};
 `;
 
