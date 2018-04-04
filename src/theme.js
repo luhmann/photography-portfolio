@@ -1,5 +1,5 @@
 const colors = {
-  black: '#22292f',
+  black: 'rgba(0, 0, 0, 0.8)',
   grey: {
     darkest: '#3d4852',
     darker: '#606f7b',
@@ -10,10 +10,14 @@ const colors = {
     lightest: '#f8fafc',
   },
   white: '#fff',
+  transparentWhite: 'rgba(255, 255, 255, 0.8)',
 };
 
 const fonts = {
-  logo: '"Fjalla One", sans-serif',
+  logo:
+    '"Patua One", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+  body:
+    '"Patua One", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
 };
 
 const fontSizes = {
@@ -28,8 +32,21 @@ const fontSizes = {
   '5xl': '3rem', // 48px
 };
 
+const letterSpacings = {
+  tight: '-0.05em',
+  normal: '0',
+  wide: '0.05em',
+};
+
+const lineHeights = {
+  none: 1,
+  tight: 1.25,
+  normal: 1.5,
+  loose: 2,
+};
+
 // Spacing Scale (used for margin and padding)
-const space = [0, 4, 8, 16, 32, 64, 128, 256, 512];
+const space = [0, 4, 8, 16, 24, 32, 64, 128, 256, 512];
 
 const zIndex = {
   low: 10,
@@ -41,6 +58,8 @@ const theme = {
   colors,
   fonts,
   fontSizes,
+  letterSpacings,
+  lineHeights,
   space,
   zIndex,
 };
