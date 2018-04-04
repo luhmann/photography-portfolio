@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Img from 'gatsby-image';
 import { dec, ifElse, inc, partialCurry } from 'rambda';
@@ -49,7 +50,7 @@ const Next = styled(Prev)`
   right: 0;
 `;
 
-const Template = ({ data, pathContext: { name }, imageIndex, next, prev }) => {
+const Gallery = ({ data, pathContext: { name }, imageIndex, next, prev }) => {
   const { allFile: { edges: images } } = data;
   const curNext = partialCurry(next, { totalImages: images.length });
   const curPrev = partialCurry(prev, { totalImages: images.length });
@@ -78,6 +79,18 @@ const Template = ({ data, pathContext: { name }, imageIndex, next, prev }) => {
   );
 };
 
+Gallery.PropTypes = {
+  data: PropTypes.shape({
+    allFile: PropTypes.shape({ edges: PropTypes.arrayOf(PropTypes.object) }),
+  }),
+  pathContext: PropTypes.shape({ name: PropTypes.string.isRequired }),
+  imageIndex: PropTypes.number.isRequired,
+  next: PropTypes.func.isRequired,
+  prev: PropTypes.func.isRequired,
+};
+
+Gallery.displayName = 'Gallery';
+
 export default withStateHandlers(
   ({ initialImageIndex = 0 }) => ({
     imageIndex: initialImageIndex,
@@ -99,7 +112,7 @@ export default withStateHandlers(
       imageIndex: nextIndex,
     }),
   }
-)(Template);
+)(Gallery);
 
 export const pageQuery = graphql`
   query ImagesByPath($name: String!) {
