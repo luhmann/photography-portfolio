@@ -10,4 +10,11 @@ const Background = styled.main`
   position: relative;
 `;
 
+Background.propTypes = {
+  ...color.propTypes,
+  ...space.propTypes,
+};
+
+Background.displayName = 'Background';
+
 export default Background;
