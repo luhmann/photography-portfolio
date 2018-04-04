@@ -22,13 +22,17 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
     }
 
     result.data.allFile.group.map(album => {
-      const { fieldValue: name, edges: images } = album;
+      const { fieldValue: name } = album;
 
       createPage({
         path: name,
         component: galleryTemplate,
         context: { name },
       });
+
+      return album;
     });
+
+    return Promise.resolve();
   });
 };
