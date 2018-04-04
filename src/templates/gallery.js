@@ -1,6 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import Img from 'gatsby-image';
+import { dec, ifElse, inc, partialCurry } from 'rambda';
 import { withStateHandlers } from 'recompose';
 import styled, { css } from 'styled-components';
 import { color, space } from 'styled-system';
@@ -50,10 +51,12 @@ const Next = styled(Prev)`
 
 const Template = ({ data, pathContext: { name }, imageIndex, next, prev }) => {
   const { allFile: { edges: images } } = data;
+  const curNext = partialCurry(next, { totalImages: images.length });
+  const curPrev = partialCurry(prev, { totalImages: images.length });
   return (
     <GalleryContainer bg="white" p={6}>
       <Helmet title={`${name} - Album`} />
-      <Prev onClick={() => prev()} />
+      <Prev onClick={() => curPrev()} />
       {images.map((image, index) => {
         const {
           node: { childImageSharp: { sizes, internal: { contentDigest } } },
@@ -70,7 +73,7 @@ const Template = ({ data, pathContext: { name }, imageIndex, next, prev }) => {
           </Image>
         );
       })}
-      <Next onClick={() => next()} />
+      <Next onClick={() => curNext()} />
     </GalleryContainer>
   );
 };
@@ -80,9 +83,21 @@ export default withStateHandlers(
     imageIndex: initialImageIndex,
   }),
   {
-    next: ({ imageIndex }) => () => ({ imageIndex: imageIndex + 1 }),
-    prev: ({ imageIndex }) => () => ({ imageIndex: imageIndex - 1 }),
-    showIndex: ({ imageIndex }) => nextIndex => ({ imageIndex: nextIndex }),
+    next: ({ imageIndex }) =>
+      ifElse(
+        ({ totalImages }) => inc(imageIndex) < totalImages,
+        () => ({ imageIndex: inc(imageIndex) }),
+        () => ({ imageIndex: 0 })
+      ),
+    prev: ({ imageIndex }) =>
+      ifElse(
+        () => dec(imageIndex) >= 0,
+        () => ({ imageIndex: dec(imageIndex) }),
+        ({ totalImages }) => ({ imageIndex: dec(totalImages) })
+      ),
+    showIndex: ({ imageIndex }) => ({ nextIndex }) => ({
+      imageIndex: nextIndex,
+    }),
   }
 )(Template);
 
