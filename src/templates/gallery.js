@@ -130,7 +130,7 @@ export const pageQuery = graphql`
               contentDigest
             }
             sizes(maxWidth: 2500, quality: 75) {
-              ...GatsbyImageSharpSizes_withWebp
+              ...GatsbyImageSharpSizes_withWebp_tracedSVG
             }
           }
         }
