@@ -15,6 +15,6 @@ StyledLink.propTypes = {
   ...color.propTypes,
 };
 
-StyledLink.displayName = 'Logo';
+StyledLink.displayName = 'StyledLink';
 
 export default StyledLink;
