@@ -7,10 +7,19 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `img`,
-        path: `${__dirname}/data/`,
+        name: `images`,
+        path: `${__dirname}/data/images`,
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `galleries`,
+        path: `${__dirname}/data/galleries`,
+      },
+    },
+    // Parse Album info
+    `gatsby-transformer-yaml`,
     // Parse all images files
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,

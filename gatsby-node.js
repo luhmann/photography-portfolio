@@ -6,13 +6,13 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
   const galleryTemplate = path.resolve(`src/templates/gallery.js`);
 
   return graphql(`
-    query AlbumQuery {
-      allFile(
-        filter: { relativeDirectory: { ne: "" } }
-        sort: { fields: [relativePath] }
-      ) {
-        group(field: relativeDirectory) {
-          fieldValue
+    query GalleriesQuery {
+      allGalleriesYaml {
+        edges {
+          node {
+            folderName
+            path
+          }
         }
       }
     }
@@ -20,17 +20,17 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
     if (result.errors) {
       return Promise.reject(result.errors);
     }
-
-    result.data.allFile.group.map(album => {
-      const { fieldValue: name } = album;
+    console.log(JSON.stringify(result));
+    result.data.allGalleriesYaml.edges.map(gallery => {
+      const { node: { folderName, path } } = gallery;
 
       createPage({
-        path: name,
+        path,
         component: galleryTemplate,
-        context: { name },
+        context: { folderName },
       });
 
-      return album;
+      return gallery;
     });
 
     return Promise.resolve();

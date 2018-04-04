@@ -49,14 +49,14 @@ const Next = styled(Prev)`
   right: 0;
 `;
 
-const Gallery = ({ data, pathContext: { name }, imageIndex, next, prev }) => {
-  const { allFile: { edges: images } } = data;
+const Gallery = ({ data, imageIndex, next, prev }) => {
+  const { allFile: { edges: images }, galleriesYaml: { title } } = data;
   const curNext = partialCurry(next, { totalImages: images.length });
   const curPrev = partialCurry(prev, { totalImages: images.length });
 
   return (
     <GalleryContainer bg="white" p={6}>
-      <Helmet title={`${name} - JF Dietrich Photography`} />
+      <Helmet title={`${title} - JF Dietrich Photography`} />
       <Prev onClick={() => curPrev()} />
       {images.map((image, index) => {
         const {
@@ -82,9 +82,8 @@ const Gallery = ({ data, pathContext: { name }, imageIndex, next, prev }) => {
 Gallery.propTypes = {
   data: PropTypes.shape({
     allFile: PropTypes.shape({ edges: PropTypes.arrayOf(PropTypes.object) }),
+    galleriesYaml: PropTypes.shape({ title: PropTypes.string.isRequired }),
   }).isRequired,
-  pathContext: PropTypes.shape({ name: PropTypes.string.isRequired })
-    .isRequired,
   imageIndex: PropTypes.number.isRequired,
   next: PropTypes.func.isRequired,
   prev: PropTypes.func.isRequired,
@@ -118,9 +117,12 @@ export default withStateHandlers(
 // Disabling eslint linting for graphql-global but only here
 /* eslint-disable-next-line */
 export const pageQuery = graphql`
-  query ImagesByPath($name: String!) {
+  query Gallery($folderName: String!) {
+    galleriesYaml(folderName: { eq: $folderName }) {
+      title
+    }
     allFile(
-      filter: { relativeDirectory: { eq: $name } }
+      filter: { relativeDirectory: { eq: $folderName } }
       sort: { fields: [relativePath] }
     ) {
       edges {
