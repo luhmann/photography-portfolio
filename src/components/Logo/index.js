@@ -1,22 +1,19 @@
 import styled from 'styled-components';
-import { color, fontFamily, fontSize, space, themeGet } from 'styled-system';
+import { space, themeGet } from 'styled-system';
 
 const Logo = styled.h1`
-  ${color};
   ${space};
-  ${fontFamily};
-  ${fontSize};
-  font-weight: 200;
+  color: ${themeGet('colors.black')};
+  font-family: ${themeGet('fonts.logo')};
+  font-size: ${themeGet('fontSizes.xl')};
+  font-weight: ${themeGet('fontWeights.bold')};
   position: absolute;
-  top: ${themeGet('space.2')}px;
+  top: ${themeGet('space.3')}px;
   left: ${themeGet('space.4')}px;
   z-index: ${themeGet('zIndex.high')};
 `;
 
 Logo.propTypes = {
-  ...color.propTypes,
-  ...fontFamily.propTypes,
-  ...fontSize.propTypes,
   ...space.propTypes,
 };
 
