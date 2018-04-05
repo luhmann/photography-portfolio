@@ -3,22 +3,11 @@ import PropTypes from 'prop-types';
 import { pathOr, pipe } from 'rambda';
 import { Helmet } from 'react-helmet';
 import { mapProps } from 'recompose';
-import styled, { ThemeProvider } from 'styled-components';
-import { themeGet } from 'styled-system';
+import { ThemeProvider } from 'styled-components';
 import theme from '../theme';
 
 import { Background, Logo, Menu, StyledLink } from '../components/';
 import './index.css';
-
-const Content = styled.div`
-  background-color: ${themeGet('colors.white')};
-  position: absolute;
-  top: ${themeGet('space.containerBorder')};
-  bottom: ${themeGet('space.containerBorder')};
-  left: ${themeGet('space.containerBorder')};
-  right: ${themeGet('space.containerBorder')};
-  padding: ${themeGet('space.6')};
-`;
 
 const Layout = ({ children, albums }) => {
   console.log(albums);
@@ -33,13 +22,11 @@ const Layout = ({ children, albums }) => {
           />
         </Helmet>
         <Background bg="black">
-          <Content>
-            <StyledLink to="/" color="black">
-              <Logo m={0}>JF Dietrich Photography</Logo>
-            </StyledLink>
-            <Menu albums={albums} />
-            {children()}
-          </Content>
+          <StyledLink to="/" color="black">
+            <Logo m={0}>JF Dietrich Photography</Logo>
+          </StyledLink>
+          <Menu albums={albums} />
+          {children()}
         </Background>
       </div>
     </ThemeProvider>

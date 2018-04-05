@@ -5,11 +5,14 @@ import Img from 'gatsby-image';
 import { dec, ifElse, inc, partialCurry } from 'rambda';
 import { withStateHandlers } from 'recompose';
 import styled, { css } from 'styled-components';
-import { space } from 'styled-system';
+import { themeGet } from 'styled-system';
+import { ContentContainer } from '../components';
+
+const GalleryContainer = styled(ContentContainer)`
+  padding: ${themeGet('space.6')};
+`;
 
 const Image = styled.div`
-  ${space};
-
   align-items: center;
   display: flex;
   height: 100%;
@@ -46,9 +49,9 @@ const Gallery = ({ data, imageIndex, next, prev }) => {
   const curPrev = partialCurry(prev, { totalImages: images.length });
 
   return (
-    <React.Fragment>
+    <GalleryContainer>
       <Helmet title={`${title} - JF Dietrich Photography`} />
-      <Prev onClick={() => curPrev()} />
+      <Prev onClick={curPrev} />
       {images.map((image, index) => {
         const {
           node: { childImageSharp: { sizes, internal: { contentDigest } } },
@@ -65,8 +68,8 @@ const Gallery = ({ data, imageIndex, next, prev }) => {
           </Image>
         );
       })}
-      <Next onClick={() => curNext()} />
-    </React.Fragment>
+      <Next onClick={curNext} />
+    </GalleryContainer>
   );
 };
 
