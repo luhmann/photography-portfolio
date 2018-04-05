@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Img from 'gatsby-image';
-import { dec, ifElse, inc, partialCurry } from 'rambda';
+import { dec, ifElse, inc } from 'rambda';
 import { compose, mapProps, withStateHandlers } from 'recompose';
 import styled, { css } from 'styled-components';
 import { themeGet } from 'styled-system';
@@ -46,32 +46,26 @@ const Next = styled(Prev)`
   right: 0;
 `;
 
-const Gallery = ({ images, title, imageIndex, next, prev }) => {
-  const curNext = partialCurry(next, { totalImages: images.length });
-  const curPrev = partialCurry(prev, { totalImages: images.length });
-
-  return (
-    <GalleryContainer>
-      <Helmet title={`${title} - JF Dietrich Photography`} />
-      <Prev onClick={curPrev} />
-      {images.map((image, index) => {
-        const { sizes, contentDigest } = image;
-        return (
-          <Image key={contentDigest} invisible={index !== imageIndex}>
-            <Img
-              sizes={sizes}
-              style={{ height: '100%' }}
-              imgStyle={{
-                objectFit: 'contain',
-              }}
-            />
-          </Image>
-        );
-      })}
-      <Next onClick={curNext} />
-    </GalleryContainer>
-  );
-};
+const Gallery = ({ images, title, imageIndex, next, prev }) => (
+  <GalleryContainer>
+    <Helmet title={`${title} - JF Dietrich Photography`} />
+    <Prev onClick={prev} />
+    {images.map((image, index) => {
+      return (
+        <Image key={image.contentDigest} invisible={index !== imageIndex}>
+          <Img
+            sizes={image.sizes}
+            style={{ height: '100%' }}
+            imgStyle={{
+              objectFit: 'contain',
+            }}
+          />
+        </Image>
+      );
+    })}
+    <Next onClick={next} />
+  </GalleryContainer>
+);
 
 Gallery.propTypes = {
   images: PropTypes.arrayOf(
@@ -98,17 +92,17 @@ export default compose(
       imageIndex: initialImageIndex,
     }),
     {
-      next: ({ imageIndex }) =>
+      next: ({ imageIndex }, { images }) =>
         ifElse(
-          ({ totalImages }) => inc(imageIndex) < totalImages,
+          () => inc(imageIndex) < images.length,
           () => ({ imageIndex: inc(imageIndex) }),
           () => ({ imageIndex: 0 })
         ),
-      prev: ({ imageIndex }) =>
+      prev: ({ imageIndex }, { images }) =>
         ifElse(
           () => dec(imageIndex) >= 0,
           () => ({ imageIndex: dec(imageIndex) }),
-          ({ totalImages }) => ({ imageIndex: dec(totalImages) })
+          () => ({ imageIndex: dec(images.length) })
         ),
       showIndex: () => ({ nextIndex }) => ({
         imageIndex: nextIndex,
