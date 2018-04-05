@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { pathOr, pipe } from 'rambda';
 import { Helmet } from 'react-helmet';
 import { mapProps } from 'recompose';
 import { ThemeProvider } from 'styled-components';
 import theme from '../theme';
 
 import { Background, Logo, Menu, StyledLink } from '../components/';
+import { mapAllGalleriesGraphQLResponse } from '../utils/mappings';
 import './index.css';
 
 const Header = ({ albums }) => (
@@ -70,35 +70,14 @@ Layout.propTypes = {
 
 Layout.displayName = 'Layout';
 
-const mapGalleriesGraphQLResponse = response =>
-  response.map(({ fieldValue: albumTitle, edges: galleries }) => ({
-    albumTitle,
-    galleries: galleries.map(gallery => gallery.node),
-  }));
-
 export default mapProps(props => ({
-  albums: pipe(
-    pathOr([], 'data.allGalleriesYaml.group'),
-    mapGalleriesGraphQLResponse
-  )(props),
+  albums: mapAllGalleriesGraphQLResponse(props),
   location: props.location,
   children: props.children,
 }))(Layout);
 
-// Disabling eslint linting for graphql-global but only here
-/* eslint-disable-next-line */
 export const pageQuery = graphql`
   query GalleriesQuery {
-    allGalleriesYaml {
-      group(field: album) {
-        fieldValue
-        edges {
-          node {
-            title
-            path
-          }
-        }
-      }
-    }
+    ...allGalleriesYamlFragment
   }
 `;
