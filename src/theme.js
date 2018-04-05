@@ -32,6 +32,18 @@ const fontSizes = {
   '5xl': '3rem', // 48px
 };
 
+const fontWeights = {
+  hairline: 100,
+  thin: 200,
+  light: 300,
+  normal: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+  extrabold: 800,
+  black: 900,
+};
+
 const letterSpacings = {
   tight: '-0.05em',
   normal: '0',
@@ -58,6 +70,7 @@ const theme = {
   colors,
   fonts,
   fontSizes,
+  fontWeights,
   letterSpacings,
   lineHeights,
   space,
