@@ -13,10 +13,10 @@ import './index.css';
 const Content = styled.div`
   background-color: ${themeGet('colors.white')};
   position: absolute;
-  top: 6px;
-  bottom: 6px;
-  left: 6px;
-  right: 6px;
+  top: ${themeGet('space.containerBorder')};
+  bottom: ${themeGet('space.containerBorder')};
+  left: ${themeGet('space.containerBorder')};
+  right: ${themeGet('space.containerBorder')};
   padding: ${themeGet('space.6')};
 `;
 
