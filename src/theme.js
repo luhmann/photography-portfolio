@@ -58,7 +58,19 @@ const lineHeights = {
 };
 
 // Spacing Scale (used for margin and padding)
-const space = [0, 4, 8, 16, 24, 32, 64, 128, 256, 512];
+const space = {
+  px: '1px',
+  '0': '0',
+  '1': '0.25rem',
+  '2': '0.5rem',
+  '3': '1rem',
+  '4': '1.5rem',
+  '5': '2rem',
+  '6': '4rem',
+  '7': '8rem',
+  '8': '16rem',
+  '9': '32rem',
+};
 
 const zIndex = {
   low: 10,
