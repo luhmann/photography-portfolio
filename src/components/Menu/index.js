@@ -18,7 +18,7 @@ const Nav = styled.a`
   z-index: ${themeGet('zIndex.low')};
 
   &:hover {
-    color: ${themeGet('colors.grey.darkest')};
+    color: ${themeGet('colors.red.dark')};
   }
 `;
 
@@ -36,7 +36,10 @@ const MenuSlideout = styled.nav`
   background-color: ${themeGet('colors.white')};
   right: -51vw;
   width: 50vw;
-  height: 100vh;
+  height: calc(
+    100vh - ${themeGet('space.containerBorder')} -
+      ${themeGet('space.containerBorder')}
+  );
   transition: 0.5s right;
   padding: ${themeGet('space.7')} ${themeGet('space.5')};
   position: absolute;
@@ -58,7 +61,7 @@ const Album = styled.div`
 
 const Menu = ({ toggle, isOpen, albums }) => (
   <MenuContainer>
-    <Nav onClick={() => toggle()}>{isOpen ? 'x' : 'menu'}</Nav>
+    <Nav onClick={toggle}>{isOpen ? 'x' : 'menu'}</Nav>
     <MenuSlideout visible={isOpen}>
       {albums.map(album => (
         <React.Fragment key={album.albumTitle}>
@@ -77,6 +80,7 @@ const Menu = ({ toggle, isOpen, albums }) => (
                 always(4),
                 always(1)
               )()}
+              onClick={toggle}
             >
               {gallery.title}
             </StyledLink>
