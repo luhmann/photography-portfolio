@@ -12,7 +12,7 @@ import './index.css';
 const Header = ({ albums }) => (
   <React.Fragment>
     <StyledLink to="/" color="black">
-      <Logo m={0}>JF Dietrich Photography</Logo>
+      <Logo />
     </StyledLink>
     <Menu albums={albums} />
   </React.Fragment>
