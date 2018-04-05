@@ -14,6 +14,7 @@ const Nav = styled.a`
   font-family: ${themeGet('fonts.headline')};
   font-size: ${themeGet('fontSizes.xl')};
   font-weight: bold;
+  min-width: 50px;
   position: relative;
   z-index: ${themeGet('zIndex.low')};
 
@@ -34,7 +35,7 @@ const MenuContainer = styled.nav`
 
 const MenuSlideout = styled.nav`
   background-color: ${themeGet('colors.white')};
-  right: -51vw;
+  right: calc(-1 * (50vw + ${themeGet('space.containerBorder')}));
   width: 50vw;
   height: calc(
     100vh - ${themeGet('space.containerBorder')} -
