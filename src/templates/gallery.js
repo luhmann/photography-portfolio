@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Img from 'gatsby-image';
 import { dec, ifElse, inc, partialCurry } from 'rambda';
-import { withStateHandlers } from 'recompose';
+import { compose, mapProps, withStateHandlers } from 'recompose';
 import styled, { css } from 'styled-components';
 import { themeGet } from 'styled-system';
 import { ContentContainer } from '../components';
+import {
+  mapGalleryImagesGraphQLResponse,
+  mapSingleGalleryYamlGraphQLResponse,
+} from '../utils/mappings';
 
 const GalleryContainer = styled(ContentContainer)`
   padding: ${themeGet('space.6')};
@@ -42,9 +46,7 @@ const Next = styled(Prev)`
   right: 0;
 `;
 
-const Gallery = ({ data, imageIndex, next, prev }) => {
-  // TODO: refactor to use mapProps
-  const { allFile: { edges: images }, galleriesYaml: { title } } = data;
+const Gallery = ({ images, title, imageIndex, next, prev }) => {
   const curNext = partialCurry(next, { totalImages: images.length });
   const curPrev = partialCurry(prev, { totalImages: images.length });
 
@@ -53,9 +55,7 @@ const Gallery = ({ data, imageIndex, next, prev }) => {
       <Helmet title={`${title} - JF Dietrich Photography`} />
       <Prev onClick={curPrev} />
       {images.map((image, index) => {
-        const {
-          node: { childImageSharp: { sizes, internal: { contentDigest } } },
-        } = image;
+        const { sizes, contentDigest } = image;
         return (
           <Image key={contentDigest} invisible={index !== imageIndex}>
             <Img
@@ -74,10 +74,13 @@ const Gallery = ({ data, imageIndex, next, prev }) => {
 };
 
 Gallery.propTypes = {
-  data: PropTypes.shape({
-    allFile: PropTypes.shape({ edges: PropTypes.arrayOf(PropTypes.object) }),
-    galleriesYaml: PropTypes.shape({ title: PropTypes.string.isRequired }),
-  }).isRequired,
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      sizes: PropTypes.object.isRequired,
+      contentDigest: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  title: PropTypes.string.isRequired,
   imageIndex: PropTypes.number.isRequired,
   next: PropTypes.func.isRequired,
   prev: PropTypes.func.isRequired,
@@ -85,52 +88,43 @@ Gallery.propTypes = {
 
 Gallery.displayName = 'Gallery';
 
-export default withStateHandlers(
-  ({ initialImageIndex = 0 }) => ({
-    imageIndex: initialImageIndex,
-  }),
-  {
-    next: ({ imageIndex }) =>
-      ifElse(
-        ({ totalImages }) => inc(imageIndex) < totalImages,
-        () => ({ imageIndex: inc(imageIndex) }),
-        () => ({ imageIndex: 0 })
-      ),
-    prev: ({ imageIndex }) =>
-      ifElse(
-        () => dec(imageIndex) >= 0,
-        () => ({ imageIndex: dec(imageIndex) }),
-        ({ totalImages }) => ({ imageIndex: dec(totalImages) })
-      ),
-    showIndex: () => ({ nextIndex }) => ({
-      imageIndex: nextIndex,
+export default compose(
+  mapProps(props => ({
+    images: mapGalleryImagesGraphQLResponse(props),
+    title: mapSingleGalleryYamlGraphQLResponse(props),
+  })),
+  withStateHandlers(
+    ({ initialImageIndex = 0 }) => ({
+      imageIndex: initialImageIndex,
     }),
-  }
+    {
+      next: ({ imageIndex }) =>
+        ifElse(
+          ({ totalImages }) => inc(imageIndex) < totalImages,
+          () => ({ imageIndex: inc(imageIndex) }),
+          () => ({ imageIndex: 0 })
+        ),
+      prev: ({ imageIndex }) =>
+        ifElse(
+          () => dec(imageIndex) >= 0,
+          () => ({ imageIndex: dec(imageIndex) }),
+          ({ totalImages }) => ({ imageIndex: dec(totalImages) })
+        ),
+      showIndex: () => ({ nextIndex }) => ({
+        imageIndex: nextIndex,
+      }),
+    }
+  )
 )(Gallery);
 
-// Disabling eslint linting for graphql-global
-/* eslint-disable-next-line */
 export const pageQuery = graphql`
   query Gallery($folderName: String!) {
-    galleriesYaml(folderName: { eq: $folderName }) {
-      title
-    }
+    ...singleGalleryYamlFragment
     allFile(
       filter: { relativeDirectory: { eq: $folderName } }
       sort: { fields: [relativePath] }
     ) {
-      edges {
-        node {
-          childImageSharp {
-            internal {
-              contentDigest
-            }
-            sizes(maxWidth: 2500, quality: 75) {
-              ...GatsbyImageSharpSizes_withWebp_tracedSVG
-            }
-          }
-        }
-      }
+      ...GalleryImagesFragment
     }
   }
 `;
