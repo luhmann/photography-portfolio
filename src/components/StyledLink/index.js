@@ -6,7 +6,8 @@ const StyledLink = styled(Link)`
   ${color};
   text-decoration: none;
 
-  &:hover {
+  &:hover,
+  &:hover > * {
     color: ${themeGet('colors.grey.darkest')};
   }
 `;
