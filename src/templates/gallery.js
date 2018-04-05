@@ -5,17 +5,7 @@ import Img from 'gatsby-image';
 import { dec, ifElse, inc, partialCurry } from 'rambda';
 import { withStateHandlers } from 'recompose';
 import styled, { css } from 'styled-components';
-import { color, space } from 'styled-system';
-
-const GalleryContainer = styled.div`
-  ${space};
-  ${color};
-  position: absolute;
-  top: 6px;
-  bottom: 6px;
-  left: 6px;
-  right: 6px;
-`;
+import { space } from 'styled-system';
 
 const Image = styled.div`
   ${space};
@@ -55,7 +45,7 @@ const Gallery = ({ data, imageIndex, next, prev }) => {
   const curPrev = partialCurry(prev, { totalImages: images.length });
 
   return (
-    <GalleryContainer bg="white" p={6}>
+    <React.Fragment>
       <Helmet title={`${title} - JF Dietrich Photography`} />
       <Prev onClick={() => curPrev()} />
       {images.map((image, index) => {
@@ -75,7 +65,7 @@ const Gallery = ({ data, imageIndex, next, prev }) => {
         );
       })}
       <Next onClick={() => curNext()} />
-    </GalleryContainer>
+    </React.Fragment>
   );
 };
 
@@ -114,7 +104,7 @@ export default withStateHandlers(
   }
 )(Gallery);
 
-// Disabling eslint linting for graphql-global but only here
+// Disabling eslint linting for graphql-global
 /* eslint-disable-next-line */
 export const pageQuery = graphql`
   query Gallery($folderName: String!) {
