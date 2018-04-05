@@ -25,8 +25,8 @@ const Nav = styled.a`
 const MenuContainer = styled.nav`
   position: absolute;
   right: 0;
-  padding-top: ${themeGet('space.3')}px;
-  padding-right: ${themeGet('space.3')}px;
+  padding-top: ${themeGet('space.3')};
+  padding-right: ${themeGet('space.3')};
   text-align: right;
   top: 0;
   z-index: ${themeGet('zIndex.high')};

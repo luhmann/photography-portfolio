@@ -8,8 +8,8 @@ const Logo = styled.h1`
   font-size: ${themeGet('fontSizes.xl')};
   font-weight: ${themeGet('fontWeights.bold')};
   position: absolute;
-  top: ${themeGet('space.3')}px;
-  left: ${themeGet('space.4')}px;
+  top: ${themeGet('space.3')};
+  left: ${themeGet('space.4')};
   z-index: ${themeGet('zIndex.high')};
 `;
 

@@ -40,6 +40,7 @@ const Next = styled(Prev)`
 `;
 
 const Gallery = ({ data, imageIndex, next, prev }) => {
+  // TODO: refactor to use mapProps
   const { allFile: { edges: images }, galleriesYaml: { title } } = data;
   const curNext = partialCurry(next, { totalImages: images.length });
   const curPrev = partialCurry(prev, { totalImages: images.length });

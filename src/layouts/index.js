@@ -17,7 +17,7 @@ const Content = styled.div`
   bottom: 6px;
   left: 6px;
   right: 6px;
-  padding: ${themeGet('space.6')}px;
+  padding: ${themeGet('space.6')};
 `;
 
 const Layout = ({ children, albums }) => {
