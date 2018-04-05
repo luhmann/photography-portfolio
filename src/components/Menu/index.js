@@ -5,6 +5,8 @@ import { withStateHandlers } from 'recompose';
 import styled, { css } from 'styled-components';
 import { themeGet } from 'styled-system';
 
+import { StyledLink } from '../';
+
 const Nav = styled.a`
   color: ${themeGet('colors.black')};
   cursor: pointer;
@@ -32,7 +34,7 @@ const MenuContainer = styled.nav`
 
 const MenuSlideout = styled.nav`
   background-color: ${themeGet('colors.transparentWhite')};
-  right: -50vw;
+  right: -51vw;
   width: 50vw;
   height: 100vh;
   transition: 0.5s right;
@@ -46,16 +48,43 @@ const MenuSlideout = styled.nav`
     `};
 `;
 
-const Menu = ({ toggle, isOpen }) => (
+const Album = styled.div`
+  font-family: ${themeGet('fonts.body')};
+  font-size: ${themeGet('fontSizes.m')};
+`;
+
+const Menu = ({ toggle, isOpen, albums }) => (
   <MenuContainer>
     <Nav onClick={() => toggle()}>{isOpen ? 'x' : 'menu'}</Nav>
-    <MenuSlideout visible={isOpen} />
+    <MenuSlideout visible={isOpen}>
+      {albums.map(album => (
+        <React.Fragment key={album.albumTitle}>
+          <Album>{album.albumTitle}</Album>
+          {album.galleries.map(gallery => (
+            <StyledLink key={gallery.path} to={gallery.path}>
+              {gallery.title}
+            </StyledLink>
+          ))}
+        </React.Fragment>
+      ))}
+    </MenuSlideout>
   </MenuContainer>
 );
 
 Menu.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
+  albums: PropTypes.arrayOf(
+    PropTypes.shape({
+      albumTitle: PropTypes.string.isRequired,
+      galleries: PropTypes.arrayOf(
+        PropTypes.shape({
+          title: PropTypes.string.isRequired,
+          path: PropTypes.string.isRequired,
+        })
+      ).isRequired,
+    })
+  ).isRequired,
 };
 
 export default withStateHandlers(
