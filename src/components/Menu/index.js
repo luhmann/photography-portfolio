@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { not } from 'rambda';
+import { always, not, ifElse } from 'rambda';
 import { withStateHandlers } from 'recompose';
 import styled, { css } from 'styled-components';
 import { themeGet } from 'styled-system';
@@ -11,7 +11,7 @@ const Nav = styled.a`
   color: ${themeGet('colors.black')};
   cursor: pointer;
   display: block;
-  font-family: ${themeGet('fonts.body')};
+  font-family: ${themeGet('fonts.headline')};
   font-size: ${themeGet('fontSizes.xl')};
   font-weight: bold;
   position: relative;
@@ -26,18 +26,19 @@ const MenuContainer = styled.nav`
   position: absolute;
   right: 0;
   padding-top: ${themeGet('space.3')};
-  padding-right: ${themeGet('space.3')};
+  padding-right: ${themeGet('space.5')};
   text-align: right;
   top: 0;
   z-index: ${themeGet('zIndex.high')};
 `;
 
 const MenuSlideout = styled.nav`
-  background-color: ${themeGet('colors.transparentWhite')};
+  background-color: ${themeGet('colors.white')};
   right: -51vw;
   width: 50vw;
   height: 100vh;
   transition: 0.5s right;
+  padding: ${themeGet('space.7')} ${themeGet('space.5')};
   position: absolute;
   top: 0;
 
@@ -49,8 +50,10 @@ const MenuSlideout = styled.nav`
 `;
 
 const Album = styled.div`
-  font-family: ${themeGet('fonts.body')};
-  font-size: ${themeGet('fontSizes.m')};
+  color: ${themeGet('colors.black')};
+  font-family: ${themeGet('fonts.headline')};
+  font-size: ${themeGet('fontSizes.5xl')};
+  margin-bottom: ${themeGet('space.2')};
 `;
 
 const Menu = ({ toggle, isOpen, albums }) => (
@@ -60,8 +63,21 @@ const Menu = ({ toggle, isOpen, albums }) => (
       {albums.map(album => (
         <React.Fragment key={album.albumTitle}>
           <Album>{album.albumTitle}</Album>
-          {album.galleries.map(gallery => (
-            <StyledLink key={gallery.path} to={gallery.path}>
+          {album.galleries.map((gallery, index) => (
+            <StyledLink
+              key={gallery.path}
+              to={gallery.path}
+              color="black"
+              fontFamily="body"
+              fontSize="xl"
+              fontWeight="bold"
+              display="block"
+              mb={ifElse(
+                () => index === album.galleries.length - 1,
+                always(4),
+                always(1)
+              )()}
+            >
               {gallery.title}
             </StyledLink>
           ))}

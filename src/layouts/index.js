@@ -28,7 +28,7 @@ const Layout = ({ children, albums }) => {
         <Helmet>
           <title>J F Dietrich Photography</title>
           <link
-            href="https://fonts.googleapis.com/css?family=Patua+One"
+            href="https://fonts.googleapis.com/css?family=Lora:700|Patua+One"
             rel="stylesheet"
           />
         </Helmet>

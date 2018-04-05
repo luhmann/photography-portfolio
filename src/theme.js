@@ -10,14 +10,20 @@ const colors = {
     lightest: '#f8fafc',
   },
   white: '#fff',
-  transparentWhite: 'rgba(255, 255, 255, 0.8)',
+  red: {
+    base: '#E3342F',
+    dark: '#CC1F1A',
+    darker: '#621B18',
+  },
 };
 
 const fonts = {
   logo:
     '"Patua One", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-  body:
+  headline:
     '"Patua One", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+  body:
+    '"Lora", "Constantia", "Lucida Bright", "Lucidabright", "Lucida Serif", "Lucida", "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", "Georgia", "serif"',
 };
 
 const fontSizes = {
