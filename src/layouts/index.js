@@ -42,7 +42,7 @@ const Layout = ({ children, albums, location }) => (
           rel="stylesheet"
         />
       </Helmet>
-      <Background bg="black">
+      <Background>
         {location.pathname === '/' ? null : <Header albums={albums} />}
         {children()}
       </Background>

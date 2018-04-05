@@ -1,19 +1,15 @@
 import styled from 'styled-components';
-import { color, space } from 'styled-system';
+import { themeGet } from 'styled-system';
 
 const Background = styled.main`
-  ${color};
-  ${space};
+  background-color: ${themeGet('colors.black')};
   height: 100vh;
   width: 100vw;
   overflow: hidden;
   position: relative;
 `;
 
-Background.propTypes = {
-  ...color.propTypes,
-  ...space.propTypes,
-};
+Background.propTypes = {};
 
 Background.displayName = 'Background';
 
