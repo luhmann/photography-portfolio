@@ -1,10 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { compose, lifecycle, mapProps, withStateHandlers } from 'recompose';
 import Img from 'gatsby-image';
+import Link from 'gatsby-link';
 import { ifElse, inc } from 'rambda';
 import styled, { css } from 'styled-components';
 import { mapGalleryImagesGraphQLResponse } from '../utils/mappings';
-import { ContentContainer } from '../components';
+import { ContentContainer, Logo } from '../components';
+import { themeGet } from 'styled-system';
 
 const Image = styled.div`
   height: 100%;
@@ -21,6 +24,43 @@ const Image = styled.div`
     `};
 `;
 
+const IndexLogo = styled(Logo)`
+  font-size: ${themeGet('fontSizes.4xl')};
+  text-shadow: rgba(0, 0, 0, 0.5) 0 0 10px;
+  position: static;
+`;
+
+const PortfolioButton = styled(Link)`
+  background-color: rgba(0, 0, 0, 0.05);
+  border: 2px solid ${themeGet('colors.white')};
+  display: block;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serf;
+  font-size: ${themeGet('fontSizes.sm')};
+  color: ${themeGet('colors.white')};
+  letter-spacing: 1px;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-rendering: optimizeLegibility;
+  padding: ${themeGet('space.3')} ${themeGet('space.4')};
+  transition: color 170ms ease-in-out, background-color 170ms ease-in-out;
+
+  &:hover {
+    background-color: ${themeGet('colors.white')};
+    color: #000;
+  }
+`;
+
+const Footer = styled.div`
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  height: 15vh;
+  width: 100%;
+  padding: ${themeGet('space.0')} ${themeGet('space.6')};
+  justify-content: space-between;
+`;
+
 let intervalId;
 const clearSideshowInterval = ({ intervalId }) =>
   window.clearTimeout(intervalId);
@@ -34,8 +74,23 @@ const IndexPage = ({ images, imageIndex, next }) => {
           <Img sizes={image.sizes} style={{ height: '100%' }} />
         </Image>
       ))}
+      <Footer>
+        <IndexLogo color="white" />
+        <PortfolioButton to="/norway">Portfolio</PortfolioButton>
+      </Footer>
     </ContentContainer>
   );
+};
+
+IndexPage.propTypes = {
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      sizes: PropTypes.object.isRequired,
+      contentDigest: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  imageIndex: PropTypes.number.isRequired,
+  next: PropTypes.func.isRequired,
 };
 
 export default compose(
