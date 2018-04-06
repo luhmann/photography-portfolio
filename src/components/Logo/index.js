@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { space, color, themeGet } from 'styled-system';
 
 const LogoStyle = styled.h1`
-  ${space};
   ${color};
   font-family: ${themeGet('fonts.logo')};
   font-size: ${themeGet('fontSizes.xl')};
@@ -13,6 +12,7 @@ const LogoStyle = styled.h1`
   left: ${themeGet('space.4')};
   margin: ${themeGet('space.0')};
   z-index: ${themeGet('zIndex.high')};
+  ${space};
 `;
 
 const Logo = props => <LogoStyle {...props}>JF Dietrich Photography</LogoStyle>;
