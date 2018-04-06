@@ -114,15 +114,26 @@ const theme = {
   zIndex,
 };
 
-export default theme;
+export const createMaxWidthMediaQueryCondition = size =>
+  `(max-width: ${size}rem)`;
 
 export const media = Object.keys(screens).reduce((acc, label) => {
-  console.log(label, screens[label]);
   acc[label] = (...args) => css`
-    @media (max-width: ${parseInt(screens[label], 10) / 16}rem) {
+    @media ${createMaxWidthMediaQueryCondition(
+        parseInt(screens[label], 10) / 16
+      )} {
       ${css(...args)};
     }
   `;
 
   return acc;
 }, {});
+
+export const matchMedia = label =>
+  Boolean(
+    window.matchMedia(
+      createMaxWidthMediaQueryCondition(parseInt(screens[label], 10) / 16)
+    ).matches
+  );
+
+export default theme;
