@@ -5,6 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "babel-plugin-styled-components": "^1.5.1",
+    "body-scroll-lock": "^2.3.3",
     "gatsby": "^1.9.241",
     "gatsby-image": "^1.0.42",
     "gatsby-link": "^1.6.39",
