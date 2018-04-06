@@ -4,6 +4,7 @@ import { always, not, ifElse } from 'rambda';
 import { withStateHandlers } from 'recompose';
 import styled, { css } from 'styled-components';
 import { themeGet } from 'styled-system';
+import { media } from '../../theme';
 
 import { StyledLink } from '../';
 
@@ -25,12 +26,24 @@ const Nav = styled.a`
 
 const MenuContainer = styled.nav`
   position: absolute;
-  right: 0;
-  padding-top: ${themeGet('space.3')};
+  right: ${themeGet('space.containerBorder')};
+  padding-top: ${themeGet('space.2')};
   padding-right: ${themeGet('space.4')};
   text-align: right;
-  top: 0;
+  top: ${themeGet('space.containerBorder')};
   z-index: ${themeGet('zIndex.high')};
+
+  ${props =>
+    props.open &&
+    css`
+      padding-right: ${themeGet('space.5')};
+    `};
+
+  ${media.sm`
+    left: ${themeGet('space.containerBorderMobile')};
+    right: ${themeGet('space.containerBorderMobile')};
+    padding-right: ${themeGet('space.3')};
+  `};
 `;
 
 const MenuSlideout = styled.nav`
@@ -61,7 +74,7 @@ const Album = styled.div`
 `;
 
 const Menu = ({ toggle, isOpen, albums }) => (
-  <MenuContainer>
+  <MenuContainer open={isOpen}>
     <Nav onClick={toggle}>{isOpen ? 'x' : 'menu'}</Nav>
     <MenuSlideout visible={isOpen}>
       {albums.map(album => (

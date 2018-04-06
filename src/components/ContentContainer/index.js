@@ -11,13 +11,15 @@ const ContentContainer = styled.div`
   right: ${themeGet('space.containerBorder')};
 
   ${media.sm`
-    top: ${themeGet('space.1')};
-    bottom: ${themeGet('space.1')};
-    left: ${themeGet('space.1')};
-    right: ${themeGet('space.1')};
-    min-height: calc(100% - ${themeGet('space.1')});
+    top: ${themeGet('space.containerBorderMobile')};
+    bottom: ${themeGet('space.containerBorderMobile')};
+    left: ${themeGet('space.containerBorderMobile')};
+    right: ${themeGet('space.containerBorderMobile')};
+    min-height: calc(100% - ${themeGet('space.containerBorderMobile')});
     bottom: auto;
-    border-bottom: ${themeGet('space.1')} solid ${themeGet('colors.black')};
+    border-bottom: ${themeGet('space.containerBorderMobile')} solid ${themeGet(
+    'colors.black'
+  )};
   `};
 `;
 
