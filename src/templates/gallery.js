@@ -50,7 +50,7 @@ const Prev = styled.div`
   left: 0;
   top: 0;
   width: 49vw;
-  z-index: 10;
+  z-index: ${themeGet('zIndex.low')};
 `;
 
 const Next = styled(Prev)`

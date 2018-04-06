@@ -12,7 +12,7 @@ const LogoStyle = styled.h1`
   top: calc(${themeGet('space.containerBorder')} + ${themeGet('space.2')});
   left: calc(${themeGet('space.containerBorder')} + ${themeGet('space.4')});
   margin: ${themeGet('space.0')};
-  z-index: ${themeGet('zIndex.high')};
+  z-index: ${themeGet('zIndex.middle')};
   ${space};
 
   ${media.sm`

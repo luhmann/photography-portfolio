@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { always, not, ifElse } from 'rambda';
 import { withStateHandlers } from 'recompose';
 import styled, { css } from 'styled-components';
@@ -16,54 +17,61 @@ const Nav = styled.a`
   font-size: ${themeGet('fontSizes.xl')};
   font-weight: bold;
   min-width: 50px;
-  position: relative;
-  z-index: ${themeGet('zIndex.low')};
+  padding-right: ${themeGet('space.4')};
+  padding-top: ${themeGet('space.2')};
+  position: absolute;
+  right: ${themeGet('space.containerBorder')};
+  text-align: right;
+  top: ${themeGet('space.containerBorder')};
+  z-index: ${themeGet('zIndex.high')};
 
   &:hover {
     color: ${themeGet('colors.red.dark')};
   }
 `;
 
-const MenuContainer = styled.nav`
-  position: absolute;
-  right: ${themeGet('space.containerBorder')};
-  padding-top: ${themeGet('space.2')};
-  padding-right: ${themeGet('space.4')};
-  text-align: right;
-  top: ${themeGet('space.containerBorder')};
-  z-index: ${themeGet('zIndex.high')};
-
-  ${props =>
-    props.open &&
-    css`
-      padding-right: ${themeGet('space.5')};
-    `};
-
-  ${media.sm`
-    left: ${themeGet('space.containerBorderMobile')};
-    right: ${themeGet('space.containerBorderMobile')};
-    padding-right: ${themeGet('space.3')};
-  `};
-`;
-
 const MenuSlideout = styled.nav`
   background-color: ${themeGet('colors.white')};
-  right: calc(-1 * (50vw + ${themeGet('space.containerBorder')}));
-  width: 50vw;
   height: calc(
     100vh - ${themeGet('space.containerBorder')} -
       ${themeGet('space.containerBorder')}
   );
-  transition: 0.5s right;
   padding: ${themeGet('space.7')} ${themeGet('space.5')};
   position: absolute;
-  top: 0;
+  right: -50vw;
+  text-align: right;
+  top: ${themeGet('space.containerBorder')};
+  transition: right 0.5s ease-in-out;
+  width: 50vw;
+  z-index: ${themeGet('zIndex.middle')};
 
   ${props =>
     props.visible &&
     css`
-      right: 0;
+      right: ${themeGet('space.containerBorder')};
     `};
+
+  ${media.sm`
+    border-bottom: ${themeGet('space.containerBorderMobile')} solid ${themeGet(
+    'colors.black'
+  )};
+    min-height: calc(
+      100vh - ${themeGet('space.containerBorderMobile')});
+    left: ${themeGet('space.containerBorderMobile')};
+    width: calc(100vw - ${themeGet('space.containerBorderMobile')} - ${themeGet(
+    'space.containerBorderMobile'
+  )});
+    padding: ${themeGet('space.4')} ${themeGet('space.4')};
+    top: -100vh;
+    transition: top 0.5s ease-in-out;
+    text-align: left;
+
+    ${props =>
+      props.visible &&
+      css`
+        top: ${themeGet('space.containerBorderMobile')};
+      `};
+  `};
 `;
 
 const Album = styled.div`
@@ -71,12 +79,19 @@ const Album = styled.div`
   font-family: ${themeGet('fonts.headline')};
   font-size: ${themeGet('fontSizes.5xl')};
   margin-bottom: ${themeGet('space.2')};
+
+  ${media.sm`
+    font-size: ${themeGet('fontSizes.3xl')};
+    margin-bottom: ${themeGet('space.2')};
+  `};
 `;
 
+let menuSlideoutRef = React.createRef();
+
 const Menu = ({ toggle, isOpen, albums }) => (
-  <MenuContainer open={isOpen}>
+  <React.Fragment>
     <Nav onClick={toggle}>{isOpen ? 'x' : 'menu'}</Nav>
-    <MenuSlideout visible={isOpen}>
+    <MenuSlideout innerRef={menuSlideoutRef} visible={isOpen}>
       {albums.map(album => (
         <React.Fragment key={album.albumTitle}>
           <Album>{album.albumTitle}</Album>
@@ -86,7 +101,7 @@ const Menu = ({ toggle, isOpen, albums }) => (
               to={gallery.path}
               color="black"
               fontFamily="body"
-              fontSize="xl"
+              fontSize={['l', 'xl']}
               fontWeight="bold"
               display="block"
               mb={ifElse(
@@ -102,7 +117,7 @@ const Menu = ({ toggle, isOpen, albums }) => (
         </React.Fragment>
       ))}
     </MenuSlideout>
-  </MenuContainer>
+  </React.Fragment>
 );
 
 Menu.propTypes = {
@@ -125,5 +140,11 @@ export default withStateHandlers(
   ({ initialIsOpen = false }) => ({
     isOpen: initialIsOpen,
   }),
-  { toggle: ({ isOpen }) => () => ({ isOpen: not(isOpen) }) }
+  {
+    toggle: ({ isOpen }) => () => {
+      if (not(isOpen)) disableBodyScroll(menuSlideoutRef.current);
+      else enableBodyScroll(menuSlideoutRef.current);
+      return { isOpen: not(isOpen) };
+    },
+  }
 )(Menu);
