@@ -12,7 +12,7 @@ import {
   mapGalleryImagesGraphQLResponse,
   mapSingleGalleryYamlGraphQLResponse,
 } from '../utils/mappings';
-import { createMaxWidthMediaQueryCondition, media, matchMedia } from '../theme';
+import { createMaxWidthMediaQueryConditionForLabel, media } from '../theme';
 
 const GalleryContainer = styled(ContentContainer)`
   padding: ${themeGet('space.6')};
@@ -60,7 +60,7 @@ const Next = styled(Prev)`
 `;
 
 const Gallery = ({ images, title, imageIndex, next, prev }) => (
-  <Media query={createMaxWidthMediaQueryCondition('sm')}>
+  <Media query={createMaxWidthMediaQueryConditionForLabel('sm')}>
     {isPhone => (
       <GalleryContainer>
         <Helmet title={`${title} - JF Dietrich Photography`} />
