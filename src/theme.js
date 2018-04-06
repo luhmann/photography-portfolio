@@ -1,3 +1,20 @@
+import { css } from 'styled-components';
+
+// NOTE: this is a slightly convoluted setup that is necessary, because our choice of tools does not align well here
+// * we want to use `styled-systems`-way of having responsive sizes by passing an array for props, @see https://github.com/jxnblk/styled-system#responsive-styles
+// * at the same time we want an expressive way to write our own media-queries within styled components
+// * styled-system does not accept an object for this config it has to be an array
+// * so we keep the information in an object with expressive, keys while passing the same values to the breakpoints
+//    setting of styled-system
+const screens = {
+  sm: '576px',
+  md: '768px',
+  lg: '992px',
+  xl: '1200px',
+};
+
+const breakpoints = Object.values(screens);
+
 const colors = {
   black: 'rgba(0, 0, 0, 0.85)',
   grey: {
@@ -86,6 +103,7 @@ const zIndex = {
 };
 
 const theme = {
+  breakpoints,
   colors,
   fonts,
   fontSizes,
@@ -97,3 +115,14 @@ const theme = {
 };
 
 export default theme;
+
+export const media = Object.keys(screens).reduce((acc, label) => {
+  console.log(label, screens[label]);
+  acc[label] = (...args) => css`
+    @media (max-width: ${parseInt(screens[label], 10) / 16}rem) {
+      ${css(...args)};
+    }
+  `;
+
+  return acc;
+}, {});
