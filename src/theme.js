@@ -83,6 +83,7 @@ const lineHeights = {
 // Spacing Scale (used for margin and padding)
 const space = {
   containerBorder: '6px',
+  containerBorderMobile: '0.25rem',
   px: '1px',
   '0': '0',
   '1': '0.25rem',

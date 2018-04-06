@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { space, color, themeGet } from 'styled-system';
+import { media } from '../../theme';
 
 const LogoStyle = styled.h1`
   ${color};
@@ -8,11 +9,16 @@ const LogoStyle = styled.h1`
   font-size: ${themeGet('fontSizes.xl')};
   font-weight: ${themeGet('fontWeights.bold')};
   position: absolute;
-  top: ${themeGet('space.3')};
-  left: ${themeGet('space.4')};
+  top: calc(${themeGet('space.containerBorder')} + ${themeGet('space.2')});
+  left: calc(${themeGet('space.containerBorder')} + ${themeGet('space.4')});
   margin: ${themeGet('space.0')};
   z-index: ${themeGet('zIndex.high')};
   ${space};
+
+  ${media.sm`
+    /* NOTE: Saving the calc (= containerBorderMobile + space.3) */
+    left: ${themeGet('space.4')};
+  `};
 `;
 
 const Logo = props => <LogoStyle {...props}>JF Dietrich Photography</LogoStyle>;
