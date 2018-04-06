@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Media } from 'react-fns';
 import Helmet from 'react-helmet';
 import Img from 'gatsby-image';
 import { dec, ifElse, inc } from 'rambda';
@@ -11,7 +12,7 @@ import {
   mapGalleryImagesGraphQLResponse,
   mapSingleGalleryYamlGraphQLResponse,
 } from '../utils/mappings';
-import { media, matchMedia } from '../theme';
+import { createMaxWidthMediaQueryCondition, media, matchMedia } from '../theme';
 
 const GalleryContainer = styled(ContentContainer)`
   padding: ${themeGet('space.6')};
@@ -59,27 +60,31 @@ const Next = styled(Prev)`
 `;
 
 const Gallery = ({ images, title, imageIndex, next, prev }) => (
-  <GalleryContainer>
-    <Helmet title={`${title} - JF Dietrich Photography`} />
-    <Prev onClick={prev} />
-    {images.map((image, index) => {
-      return (
-        <Image
-          key={image.contentDigest}
-          visible={matchMedia('sm') || index === imageIndex}
-        >
-          <Img
-            sizes={image.sizes}
-            style={{ height: matchMedia('sm') ? 'auto' : '100%' }}
-            imgStyle={{
-              objectFit: 'contain',
-            }}
-          />
-        </Image>
-      );
-    })}
-    <Next onClick={next} />
-  </GalleryContainer>
+  <Media query={createMaxWidthMediaQueryCondition('sm')}>
+    {isPhone => (
+      <GalleryContainer>
+        <Helmet title={`${title} - JF Dietrich Photography`} />
+        {isPhone ? null : <Prev onClick={prev} />}
+        {images.map((image, index) => {
+          return (
+            <Image
+              key={image.contentDigest}
+              visible={isPhone || index === imageIndex}
+            >
+              <Img
+                sizes={image.sizes}
+                style={{ height: isPhone ? 'auto' : '100%' }}
+                imgStyle={{
+                  objectFit: 'contain',
+                }}
+              />
+            </Image>
+          );
+        })}
+        {isPhone ? null : <Next onClick={next} />}
+      </GalleryContainer>
+    )}
+  </Media>
 );
 
 Gallery.propTypes = {
