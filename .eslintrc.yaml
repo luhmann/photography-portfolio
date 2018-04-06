@@ -4,7 +4,12 @@ extends:
 - xo-react/space
 - prettier
 - prettier/react
+- plugin:import/errors
+- plugin:import/warnings
+
 globals:
   "graphql": true
 env:
   "browser": true
+rules:
+  import/order: 2
