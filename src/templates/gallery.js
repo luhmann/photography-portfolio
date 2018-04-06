@@ -11,23 +11,35 @@ import {
   mapGalleryImagesGraphQLResponse,
   mapSingleGalleryYamlGraphQLResponse,
 } from '../utils/mappings';
+import { media, matchMedia } from '../theme';
 
 const GalleryContainer = styled(ContentContainer)`
   padding: ${themeGet('space.6')};
+
+  ${media.sm`
+    padding: ${themeGet('space.3')};
+    padding-top: ${themeGet('space.6')};
+  `};
 `;
 
 const Image = styled.div`
   align-items: center;
-  display: flex;
+  display: none;
   height: 100%;
   position: relative;
   overflow: hidden;
 
   ${props =>
-    props.invisible &&
+    props.visible &&
     css`
-      display: none;
+      display: flex;
     `};
+
+  ${media.sm`
+    height: auto;
+    margin-bottom: ${themeGet('space.3')};
+    overflow: auto;
+  `};
 `;
 
 const Prev = styled.div`
@@ -52,10 +64,13 @@ const Gallery = ({ images, title, imageIndex, next, prev }) => (
     <Prev onClick={prev} />
     {images.map((image, index) => {
       return (
-        <Image key={image.contentDigest} invisible={index !== imageIndex}>
+        <Image
+          key={image.contentDigest}
+          visible={matchMedia('sm') || index === imageIndex}
+        >
           <Img
             sizes={image.sizes}
-            style={{ height: '100%' }}
+            style={{ height: matchMedia('sm') ? 'auto' : '100%' }}
             imgStyle={{
               objectFit: 'contain',
             }}
