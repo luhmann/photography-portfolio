@@ -83,7 +83,7 @@ const Footer = styled.div`
 
 let intervalId;
 const clearSideshowInterval = ({ intervalId }) =>
-  window.clearTimeout(intervalId);
+  window.clearInterval(intervalId);
 
 const IndexPage = ({ images, imageIndex }) => (
   <ContentContainer>
