@@ -21,7 +21,9 @@
     "styled-components": "^3.2.5",
     "styled-system": "^2.2.1"
   },
-  "keywords": ["gatsby"],
+  "keywords": [
+    "gatsby"
+  ],
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
@@ -34,6 +36,7 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-xo": "^0.20.1",
     "eslint-config-xo-react": "^0.16.0",
+    "eslint-plugin-import": "^2.10.0",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
     "prettier": "^1.11.1"
