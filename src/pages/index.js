@@ -8,7 +8,7 @@ import styled, { css } from 'styled-components';
 import { themeGet } from 'styled-system';
 import { mapGalleryImagesGraphQLResponse } from '../utils/mappings';
 import { ContentContainer, Logo } from '../components';
-import { media } from '../theme';
+import { mediaScreen } from '../theme';
 
 const Image = styled.div`
   height: calc(
@@ -29,7 +29,7 @@ const Image = styled.div`
       opacity: 0;
     `};
 
-  ${media.sm`
+  ${mediaScreen.sm`
       height: calc(
         100% - ${themeGet('space.containerBorderMobile')} -
         ${themeGet('space.containerBorderMobile')}
@@ -46,7 +46,7 @@ const IndexLogo = styled(Logo)`
   text-shadow: rgba(0, 0, 0, 0.5) 0 0 10px;
   position: static;
 
-  ${media.sm`
+  ${mediaScreen.sm`
     font-size: ${themeGet('fontSizes.3xl')};
     line-height: ${themeGet('lineHeights.tight')};
   `};
@@ -71,7 +71,7 @@ const PortfolioButton = styled(Link)`
     color: #000;
   }
 
-  ${media.sm`
+  ${mediaScreen.sm`
     padding: ${themeGet('space.3')} ${themeGet('space.3')};
   `};
 `;
@@ -86,13 +86,13 @@ const Footer = styled.div`
   padding: ${themeGet('space.2')} ${themeGet('space.6')};
   justify-content: space-between;
 
-  ${media.sm`
+  ${mediaScreen.sm`
     display: block;
     height: 30vh;
     padding: ${themeGet('space.2')} ${themeGet('space.4')};
   `};
 
-  ${media.md`
+  ${mediaScreen.md`
     padding: ${themeGet('space.2')} ${themeGet('space.4')};
   `};
 `;

@@ -5,7 +5,7 @@ import { always, not, ifElse } from 'rambda';
 import { compose, lifecycle, withStateHandlers, withProps } from 'recompose';
 import styled, { css } from 'styled-components';
 import { themeGet } from 'styled-system';
-import { media } from '../../theme';
+import { mediaScreen } from '../../theme';
 
 import { StyledLink } from '../';
 
@@ -35,7 +35,7 @@ const Nav = styled.a`
       padding-right: ${themeGet('space.5')};
     `};
 
-  ${media.sm`
+  ${mediaScreen.sm`
     right: ${themeGet('space.containerBorderMobile')};
     padding-right: ${themeGet('space.3')};
   `};
@@ -63,7 +63,7 @@ const MenuSlideout = styled.nav`
       right: ${themeGet('space.containerBorder')};
     `};
 
-  ${media.sm`
+  ${mediaScreen.sm`
     border-bottom: ${themeGet('space.containerBorderMobile')} solid ${themeGet(
     'colors.black'
   )};
@@ -92,7 +92,7 @@ const Album = styled.div`
   font-size: ${themeGet('fontSizes.5xl')};
   margin-bottom: ${themeGet('space.2')};
 
-  ${media.sm`
+  ${mediaScreen.sm`
     font-size: ${themeGet('fontSizes.3xl')};
     margin-bottom: ${themeGet('space.2')};
   `};
