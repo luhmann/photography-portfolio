@@ -7,7 +7,7 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
 
   return graphql(`
     query GalleriesQuery {
-      allGalleriesYaml {
+      allGalleriesYaml(sort: { fields: [order] }) {
         edges {
           node {
             folderName
