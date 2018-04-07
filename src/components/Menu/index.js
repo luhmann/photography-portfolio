@@ -5,7 +5,7 @@ import { always, not, ifElse } from 'rambda';
 import { compose, lifecycle, withStateHandlers, withProps } from 'recompose';
 import styled, { css } from 'styled-components';
 import { themeGet } from 'styled-system';
-import { mediaScreen } from '../../theme';
+import { mediaInput, mediaScreen } from '../../theme';
 
 import { StyledLink } from '../';
 
@@ -25,9 +25,11 @@ const Nav = styled.a`
   top: ${themeGet('space.containerBorder')};
   z-index: ${themeGet('zIndex.high')};
 
-  &:hover {
-    color: ${themeGet('colors.red.dark')};
-  }
+  ${mediaInput.mouse`
+    &:hover {
+      color: ${themeGet('colors.red.dark')};
+    }
+  `};
 
   ${props =>
     props.open &&

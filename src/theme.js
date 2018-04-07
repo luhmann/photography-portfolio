@@ -128,4 +128,19 @@ export const mediaScreen = Object.keys(screens).reduce((acc, label) => {
   return acc;
 }, {});
 
+const inputDevices = {
+  phone: 'coarse',
+  mouse: 'fine',
+};
+
+export const mediaInput = Object.keys(inputDevices).reduce((acc, label) => {
+  acc[label] = (...args) => css`
+    @media (pointer: ${inputDevices[label]}) {
+      ${css(...args)};
+    }
+  `;
+
+  return acc;
+}, {});
+
 export default theme;
