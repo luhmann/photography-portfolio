@@ -7,6 +7,8 @@ import { dec, ifElse, inc } from 'rambda';
 import { compose, mapProps, withStateHandlers } from 'recompose';
 import styled, { css } from 'styled-components';
 import { themeGet } from 'styled-system';
+import { ReactComponent as PrevIcon } from '../assets/prev.svg';
+import { ReactComponent as NextIcon } from '../assets/next.svg';
 import { ContentContainer } from '../components';
 import {
   mapGalleryImagesGraphQLResponse,
@@ -44,9 +46,12 @@ const Image = styled.div`
   `};
 `;
 
-const Prev = styled.div`
+const Prev = styled.a`
+  align-items: center;
   cursor: w-resize;
+  display: flex;
   height: 100%;
+  padding: ${themeGet('space.3')};
   position: absolute;
   left: 0;
   top: 0;
@@ -58,6 +63,19 @@ const Next = styled(Prev)`
   cursor: e-resize;
   left: auto;
   right: 0;
+  justify-content: flex-end;
+`;
+
+const StyledPrevIcon = styled(PrevIcon)`
+  cursor: pointer;
+  height: ${themeGet('space.5')};
+  width: ${themeGet('space.5')};
+`;
+
+const StyledNextIcon = styled(NextIcon)`
+  cursor: pointer;
+  height: ${themeGet('space.5')};
+  width: ${themeGet('space.5')};
 `;
 
 const Gallery = ({ images, title, imageIndex, next, prev }) => (
@@ -65,7 +83,11 @@ const Gallery = ({ images, title, imageIndex, next, prev }) => (
     {isPhone => (
       <GalleryContainer>
         <Helmet title={`${title} - JF Dietrich Photography`} />
-        {isPhone ? null : <Prev onClick={prev} />}
+        {isPhone ? null : (
+          <Prev onClick={prev}>
+            <StyledPrevIcon />
+          </Prev>
+        )}
         {images.map((image, index) => (
           <Image
             key={image.contentDigest}
@@ -80,7 +102,11 @@ const Gallery = ({ images, title, imageIndex, next, prev }) => (
             />
           </Image>
         ))}
-        {isPhone ? null : <Next onClick={next} />}
+        {isPhone ? null : (
+          <Next onClick={next}>
+            <StyledNextIcon />
+          </Next>
+        )}
       </GalleryContainer>
     )}
   </Media>
