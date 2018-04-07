@@ -7,7 +7,7 @@ import theme from '../theme';
 
 import { Background, Logo, Menu, StyledLink } from '../components/';
 import { mapAllGalleriesGraphQLResponse } from '../utils/mappings';
-import './index.css';
+import './global-styles';
 
 const Header = ({ albums }) => (
   <React.Fragment>
