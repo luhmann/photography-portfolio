@@ -27,5 +27,12 @@ module.exports = {
     `gatsby-plugin-styled-components`,
     // Use Gatsby with React 16, can be removed once gatsby v2 comes out
     `gatsby-plugin-react-next`,
+    {
+      resolve: 'gatsby-plugin-svgr',
+      options: {
+        icon: true,
+        viewBox: false,
+      },
+    },
   ],
 };
