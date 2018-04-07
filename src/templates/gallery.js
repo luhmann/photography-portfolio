@@ -12,12 +12,15 @@ import {
   mapGalleryImagesGraphQLResponse,
   mapSingleGalleryYamlGraphQLResponse,
 } from '../utils/mappings';
-import { createMaxWidthMediaQueryConditionForLabel, media } from '../theme';
+import {
+  createMaxWidthMediaQueryConditionForLabel,
+  mediaScreen,
+} from '../theme';
 
 const GalleryContainer = styled(ContentContainer)`
   padding: ${themeGet('space.6')};
 
-  ${media.sm`
+  ${mediaScreen.sm`
     padding: ${themeGet('space.3')};
     padding-top: ${themeGet('space.6')};
     will-change: scroll-position;
@@ -35,7 +38,7 @@ const Image = styled.div`
       display: flex;
     `};
 
-  ${media.sm`
+  ${mediaScreen.sm`
     height: auto;
     margin-bottom: ${themeGet('space.3')};
   `};

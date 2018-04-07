@@ -118,7 +118,7 @@ const theme = {
 export const createMaxWidthMediaQueryConditionForLabel = label =>
   `(max-width: ${parseInt(screens[label], 10) / 16}rem)`;
 
-export const media = Object.keys(screens).reduce((acc, label) => {
+export const mediaScreen = Object.keys(screens).reduce((acc, label) => {
   acc[label] = (...args) => css`
     @media ${createMaxWidthMediaQueryConditionForLabel(label)} {
       ${css(...args)};

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { space, color, themeGet } from 'styled-system';
-import { media } from '../../theme';
+import { mediaScreen } from '../../theme';
 
 const LogoStyle = styled.h1`
   ${color};
@@ -15,7 +15,7 @@ const LogoStyle = styled.h1`
   z-index: ${themeGet('zIndex.middle')};
   ${space};
 
-  ${media.sm`
+  ${mediaScreen.sm`
     /* NOTE: Saving the calc (= containerBorderMobile + space.3) */
     left: ${themeGet('space.4')};
   `};

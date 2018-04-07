@@ -1,5 +1,5 @@
 import { injectGlobal } from 'styled-components';
-import { media } from '../theme';
+import { mediaScreen } from '../theme';
 
 injectGlobal`
   body,
@@ -10,7 +10,7 @@ injectGlobal`
     width: 100vw;
     overflow: hidden;
 
-    ${media.sm`
+    ${mediaScreen.sm`
       height: auto;
       overflow: auto;
     `}
