@@ -5,24 +5,40 @@ import Img from 'gatsby-image';
 import Link from 'gatsby-link';
 import { ifElse, inc } from 'rambda';
 import styled, { css } from 'styled-components';
-import { space, themeGet } from 'styled-system';
+import { themeGet } from 'styled-system';
 import { mapGalleryImagesGraphQLResponse } from '../utils/mappings';
 import { ContentContainer, Logo } from '../components';
 import { media } from '../theme';
 
 const Image = styled.div`
-  height: 100%;
-  width: 100%;
+  height: calc(
+    100% - ${themeGet('space.containerBorder')} -
+      ${themeGet('space.containerBorder')}
+  );
+  width: calc(
+    100% - ${themeGet('space.containerBorder')} -
+      ${themeGet('space.containerBorder')}
+  );
   opacity: 1;
   transition: opacity 1s cubic-bezier(0.33, 0, 0.2, 1);
-  position: absolute;
-  top: 0;
+  position: absolute; /* NOTE: needed here because we need too stack the images for opacity */
 
   ${props =>
     props.invisible &&
     css`
       opacity: 0;
     `};
+
+  ${media.sm`
+      height: calc(
+        100% - ${themeGet('space.containerBorderMobile')} -
+        ${themeGet('space.containerBorderMobile')}
+      );
+      width: calc(
+        100% - ${themeGet('space.containerBorderMobile')} -
+        ${themeGet('space.containerBorderMobile')}
+      );
+  `};
 `;
 
 const IndexLogo = styled(Logo)`
