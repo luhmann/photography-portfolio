@@ -13,3 +13,4 @@ env:
   "browser": true
 rules:
   import/order: 2
+  no-unused-expressions: ["error", { "allowTaggedTemplates": true }]
