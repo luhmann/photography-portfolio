@@ -20,6 +20,7 @@ const GalleryContainer = styled(ContentContainer)`
   ${media.sm`
     padding: ${themeGet('space.3')};
     padding-top: ${themeGet('space.6')};
+    will-change: scroll-position;
   `};
 `;
 
@@ -65,22 +66,20 @@ const Gallery = ({ images, title, imageIndex, next, prev }) => (
       <GalleryContainer>
         <Helmet title={`${title} - JF Dietrich Photography`} />
         {isPhone ? null : <Prev onClick={prev} />}
-        {images.map((image, index) => {
-          return (
-            <Image
-              key={image.contentDigest}
-              visible={isPhone || index === imageIndex}
-            >
-              <Img
-                sizes={image.sizes}
-                style={{ height: isPhone ? 'auto' : '100%' }}
-                imgStyle={{
-                  objectFit: 'contain',
-                }}
-              />
-            </Image>
-          );
-        })}
+        {images.map((image, index) => (
+          <Image
+            key={image.contentDigest}
+            visible={isPhone || index === imageIndex}
+          >
+            <Img
+              sizes={image.sizes}
+              style={{ height: isPhone ? 'auto' : '100%' }}
+              imgStyle={{
+                objectFit: 'contain',
+              }}
+            />
+          </Image>
+        ))}
         {isPhone ? null : <Next onClick={next} />}
       </GalleryContainer>
     )}

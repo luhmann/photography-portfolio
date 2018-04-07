@@ -9,7 +9,10 @@ const Background = styled.main`
   overflow: hidden;
   position: relative;
 
-  ${media.sm`overflow: auto;`};
+  ${media.sm`
+    overflow: auto;
+    position: static;
+   `};
 `;
 
 Background.propTypes = {};
