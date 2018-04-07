@@ -28,8 +28,20 @@ const Nav = styled.a`
   &:hover {
     color: ${themeGet('colors.red.dark')};
   }
+
+  ${props =>
+    props.open &&
+    css`
+      padding-right: ${themeGet('space.5')};
+    `};
+
+  ${media.sm`
+    right: ${themeGet('space.containerBorderMobile')};
+    padding-right: ${themeGet('space.3')};
+  `};
 `;
 
+// TODO: this is doing too much, split into two components for phone and the rest
 const MenuSlideout = styled.nav`
   background-color: ${themeGet('colors.white')};
   height: calc(
@@ -95,7 +107,9 @@ const controlBodyScroll = ifElse(
 
 const Menu = ({ toggle, isOpen, albums, menuSlideoutRef }) => (
   <React.Fragment>
-    <Nav onClick={toggle}>{isOpen ? 'x' : 'menu'}</Nav>
+    <Nav onClick={toggle} open={isOpen}>
+      {isOpen ? 'x' : 'menu'}
+    </Nav>
     <MenuSlideout innerRef={menuSlideoutRef} visible={isOpen}>
       {albums.map(album => (
         <React.Fragment key={album.albumTitle}>
