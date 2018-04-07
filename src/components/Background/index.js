@@ -7,7 +7,7 @@ const Background = styled.main`
   height: 100vh;
   padding: ${themeGet('space.containerBorder')};
 
-  ${mediaScreen.sm`
+  ${mediaScreen.md`
     height: auto;
     min-height: 100vh;
     padding: ${themeGet('space.containerBorderMobile')};

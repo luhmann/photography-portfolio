@@ -6,7 +6,7 @@ const ContentContainer = styled.div`
   background-color: ${themeGet('colors.white')};
   height: 100%;
 
-  ${mediaScreen.sm`
+  ${mediaScreen.md`
     min-height: calc(100% - ${themeGet('space.containerBorderMobile')});
   `};
 `;

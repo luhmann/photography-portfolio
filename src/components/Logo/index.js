@@ -15,7 +15,7 @@ const LogoStyle = styled.h1`
   z-index: ${themeGet('zIndex.middle')};
   ${space};
 
-  ${mediaScreen.sm`
+  ${mediaScreen.md`
     /* NOTE: Saving the calc (= containerBorderMobile + space.3) */
     left: ${themeGet('space.4')};
   `};

@@ -29,7 +29,7 @@ const Image = styled.div`
       opacity: 0;
     `};
 
-  ${mediaScreen.sm`
+  ${mediaScreen.md`
       height: calc(
         100% - ${themeGet('space.containerBorderMobile')} -
         ${themeGet('space.containerBorderMobile')}
@@ -46,7 +46,7 @@ const IndexLogo = styled(Logo)`
   text-shadow: rgba(0, 0, 0, 0.5) 0 0 10px;
   position: static;
 
-  ${mediaScreen.sm`
+  ${mediaScreen.md`
     font-size: ${themeGet('fontSizes.3xl')};
     line-height: ${themeGet('lineHeights.tight')};
   `};
@@ -71,7 +71,7 @@ const PortfolioButton = styled(Link)`
     color: #000;
   }
 
-  ${mediaScreen.sm`
+  ${mediaScreen.md`
     padding: ${themeGet('space.3')} ${themeGet('space.3')};
   `};
 `;
@@ -86,7 +86,7 @@ const Footer = styled.div`
   padding: ${themeGet('space.2')} ${themeGet('space.6')};
   justify-content: space-between;
 
-  ${mediaScreen.sm`
+  ${mediaScreen.md`
     display: block;
     height: 30vh;
     padding: ${themeGet('space.2')} ${themeGet('space.4')};
