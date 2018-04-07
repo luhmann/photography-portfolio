@@ -41,7 +41,7 @@ const Nav = styled.a`
   `};
 `;
 
-// TODO: this is doing too much, split into two components for phone and the rest
+// TODO: this is doing too much, split into two components for phone and rest
 const MenuSlideout = styled.nav`
   background-color: ${themeGet('colors.white')};
   height: calc(
@@ -153,6 +153,9 @@ Menu.propTypes = {
       ).isRequired,
     })
   ).isRequired,
+  menuSlideoutRef: PropTypes.shape({
+    current: PropTypes.instanceOf(HTMLElement),
+  }).isRequired,
 };
 
 export default compose(
