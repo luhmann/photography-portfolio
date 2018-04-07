@@ -20,7 +20,7 @@ import {
 const GalleryContainer = styled(ContentContainer)`
   padding: ${themeGet('space.6')};
 
-  ${mediaScreen.sm`
+  ${mediaScreen.md`
     padding: ${themeGet('space.3')};
     padding-top: ${themeGet('space.6')};
     will-change: scroll-position;
@@ -38,7 +38,7 @@ const Image = styled.div`
       display: flex;
     `};
 
-  ${mediaScreen.sm`
+  ${mediaScreen.md`
     height: auto;
     margin-bottom: ${themeGet('space.3')};
   `};
@@ -61,7 +61,7 @@ const Next = styled(Prev)`
 `;
 
 const Gallery = ({ images, title, imageIndex, next, prev }) => (
-  <Media query={createMaxWidthMediaQueryConditionForLabel('sm')}>
+  <Media query={createMaxWidthMediaQueryConditionForLabel('md')}>
     {isPhone => (
       <GalleryContainer>
         <Helmet title={`${title} - JF Dietrich Photography`} />

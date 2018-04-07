@@ -37,7 +37,7 @@ const Nav = styled.a`
       padding-right: ${themeGet('space.5')};
     `};
 
-  ${mediaScreen.sm`
+  ${mediaScreen.md`
     right: ${themeGet('space.containerBorderMobile')};
     padding-right: ${themeGet('space.3')};
   `};
@@ -65,7 +65,7 @@ const MenuSlideout = styled.nav`
       right: ${themeGet('space.containerBorder')};
     `};
 
-  ${mediaScreen.sm`
+  ${mediaScreen.md`
     border-bottom: ${themeGet('space.containerBorderMobile')} solid ${themeGet(
     'colors.black'
   )};
@@ -94,7 +94,7 @@ const Album = styled.div`
   font-size: ${themeGet('fontSizes.5xl')};
   margin-bottom: ${themeGet('space.2')};
 
-  ${mediaScreen.sm`
+  ${mediaScreen.md`
     font-size: ${themeGet('fontSizes.3xl')};
     margin-bottom: ${themeGet('space.2')};
   `};
