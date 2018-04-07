@@ -5,13 +5,12 @@ import { media } from '../../theme';
 const Background = styled.main`
   background-color: ${themeGet('colors.black')};
   height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  position: relative;
+  padding: ${themeGet('space.containerBorder')};
 
   ${media.sm`
-    overflow: auto;
-    position: static;
+    height: auto;
+    min-height: 100vh;
+    padding: ${themeGet('space.containerBorderMobile')};
    `};
 `;
 

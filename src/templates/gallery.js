@@ -28,8 +28,6 @@ const Image = styled.div`
   align-items: center;
   display: none;
   height: 100%;
-  position: relative;
-  overflow: hidden;
 
   ${props =>
     props.visible &&
@@ -40,7 +38,6 @@ const Image = styled.div`
   ${media.sm`
     height: auto;
     margin-bottom: ${themeGet('space.3')};
-    overflow: auto;
   `};
 `;
 

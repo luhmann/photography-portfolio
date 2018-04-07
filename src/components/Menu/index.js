@@ -169,11 +169,11 @@ export default compose(
   ),
   withProps({
     menuSlideoutRef,
-  }),
-  lifecycle({
-    componentDidUpdate() {
-      const { isOpen, menuSlideoutRef } = this.props;
-      controlBodyScroll({ isOpen, menuSlideoutRef });
-    },
   })
+  // lifecycle({
+  //   componentDidUpdate() {
+  //     const { isOpen, menuSlideoutRef } = this.props;
+  //     controlBodyScroll({ isOpen, menuSlideoutRef });
+  //   },
+  // })
 )(Menu);
