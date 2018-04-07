@@ -113,6 +113,17 @@ const Menu = ({ toggle, isOpen, albums, menuSlideoutRef }) => (
       {isOpen ? 'x' : 'menu'}
     </Nav>
     <MenuSlideout innerRef={menuSlideoutRef} visible={isOpen}>
+      <StyledLink
+        to="/"
+        color="black"
+        fontFamily="body"
+        fontSize={['l', 'xl']}
+        fontWeight="bold"
+        display="block"
+        mb={2}
+      >
+        Home
+      </StyledLink>
       {albums.map(album => (
         <React.Fragment key={album.albumTitle}>
           <Album>{album.albumTitle}</Album>
