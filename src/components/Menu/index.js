@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import { always, not, ifElse } from 'rambda';
-import { withStateHandlers } from 'recompose';
+import { compose, lifecycle, withStateHandlers, withProps } from 'recompose';
 import styled, { css } from 'styled-components';
 import { themeGet } from 'styled-system';
 import { media } from '../../theme';
@@ -86,9 +86,14 @@ const Album = styled.div`
   `};
 `;
 
-let menuSlideoutRef = React.createRef();
+const menuSlideoutRef = React.createRef();
+const controlBodyScroll = ifElse(
+  ({ isOpen, menuSlideoutRef }) => menuSlideoutRef.current && isOpen,
+  ({ menuSlideoutRef }) => disableBodyScroll(menuSlideoutRef.current),
+  () => clearAllBodyScrollLocks()
+);
 
-const Menu = ({ toggle, isOpen, albums }) => (
+const Menu = ({ toggle, isOpen, albums, menuSlideoutRef }) => (
   <React.Fragment>
     <Nav onClick={toggle}>{isOpen ? 'x' : 'menu'}</Nav>
     <MenuSlideout innerRef={menuSlideoutRef} visible={isOpen}>
@@ -136,15 +141,22 @@ Menu.propTypes = {
   ).isRequired,
 };
 
-export default withStateHandlers(
-  ({ initialIsOpen = false }) => ({
-    isOpen: initialIsOpen,
+export default compose(
+  withStateHandlers(
+    ({ initialIsOpen = false }) => ({
+      isOpen: initialIsOpen,
+    }),
+    {
+      toggle: ({ isOpen }) => () => ({ isOpen: not(isOpen) }),
+    }
+  ),
+  withProps({
+    menuSlideoutRef,
   }),
-  {
-    toggle: ({ isOpen }) => () => {
-      if (not(isOpen)) disableBodyScroll(menuSlideoutRef.current);
-      else enableBodyScroll(menuSlideoutRef.current);
-      return { isOpen: not(isOpen) };
+  lifecycle({
+    componentDidUpdate() {
+      const { isOpen, menuSlideoutRef } = this.props;
+      controlBodyScroll({ isOpen, menuSlideoutRef });
     },
-  }
+  })
 )(Menu);
