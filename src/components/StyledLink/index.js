@@ -9,6 +9,7 @@ import {
   space,
   themeGet,
 } from 'styled-system';
+import { mediaInput } from '../../theme';
 
 const StyledLink = styled(Link)`
   ${color};
@@ -19,10 +20,12 @@ const StyledLink = styled(Link)`
   ${space};
   text-decoration: none;
 
-  &:hover,
-  &:hover > * {
-    color: ${themeGet('colors.red.dark')};
-  }
+  ${mediaInput.mouse`
+    &:hover,
+    &:hover > * {
+      color: ${themeGet('colors.red.dark')};
+    }
+  `};
 `;
 
 StyledLink.propTypes = {
