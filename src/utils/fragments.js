@@ -17,7 +17,7 @@ export const GalleryImagesFragment = graphql`
 
 export const allGalleriesYamlFragment = graphql`
   fragment allGalleriesYamlFragment on RootQueryType {
-    allGalleriesYaml {
+    allGalleriesYaml(sort: { fields: [order] }) {
       group(field: album) {
         fieldValue
         edges {
