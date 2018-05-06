@@ -110,7 +110,7 @@ const IndexPage = ({ images, imageIndex }) => (
     ))}
     <Footer>
       <IndexLogo color="white" mb={[5, 0]} />
-      <PortfolioButton to="/norway">Portfolio</PortfolioButton>
+      <PortfolioButton to="/portraits">Portfolio</PortfolioButton>
     </Footer>
   </ContentContainer>
 );
