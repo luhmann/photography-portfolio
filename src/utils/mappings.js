@@ -12,11 +12,13 @@ export const mapAllGalleriesGraphQLResponse = pipe(
 );
 
 const flattenGalleryImagesGraphQLResponse = response =>
-  response.map(
-    ({
-      node: { childImageSharp: { sizes, internal: { contentDigest } } },
-    }) => ({ sizes, contentDigest })
-  );
+  response
+    .filter(item => item.node && item.node.childImageSharp)
+    .map(
+      ({
+        node: { childImageSharp: { sizes, internal: { contentDigest } } },
+      }) => ({ sizes, contentDigest })
+    );
 
 export const mapGalleryImagesGraphQLResponse = pipe(
   path('data.allFile.edges'),
