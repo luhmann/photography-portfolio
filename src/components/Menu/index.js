@@ -182,12 +182,11 @@ export default compose(
   ),
   withProps({
     menuSlideoutRef,
+  }),
+  lifecycle({
+    componentDidUpdate() {
+      const { isOpen, menuSlideoutRef } = this.props;
+      controlBodyScroll({ isOpen, menuSlideoutRef });
+    },
   })
-  // TODO: decide what do with this, currently breaks desktop
-  // lifecycle({
-  //   componentDidUpdate() {
-  //     const { isOpen, menuSlideoutRef } = this.props;
-  //     controlBodyScroll({ isOpen, menuSlideoutRef });
-  //   },
-  // })
 )(Menu);
