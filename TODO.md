@@ -1,2 +1,4 @@
-*   [ ] Favicon
-*   [ ] re-expot cake gallery
+-   [ ] Favicon
+-   [ ] re-export cake gallery
+-   [] add a reall 404 page
+-   [] fix fallback fonts when google fonts is blocked
