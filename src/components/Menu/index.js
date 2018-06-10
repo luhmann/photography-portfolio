@@ -167,7 +167,7 @@ Menu.propTypes = {
     })
   ).isRequired,
   menuSlideoutRef: PropTypes.shape({
-    current: PropTypes.instanceOf(HTMLElement),
+    current: PropTypes.any,
   }).isRequired,
 };
 
