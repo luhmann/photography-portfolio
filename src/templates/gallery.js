@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import Img from 'gatsby-image';
 import { dec, ifElse, inc } from 'rambda';
 import { compose, mapProps, withStateHandlers } from 'recompose';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { themeGet } from 'styled-system';
 import { ReactComponent as PrevIcon } from '../assets/prev.svg';
 import { ReactComponent as NextIcon } from '../assets/next.svg';
@@ -31,14 +31,7 @@ const GalleryContainer = styled(ContentContainer)`
 
 const Image = styled.div`
   align-items: center;
-  display: none;
   height: 100%;
-
-  ${props =>
-    props.visible &&
-    css`
-      display: flex;
-    `};
 
   ${mediaScreen.md`
     height: auto;
@@ -88,20 +81,20 @@ const Gallery = ({ images, title, imageIndex, next, prev }) => (
             <StyledPrevIcon />
           </Prev>
         )}
-        {images.map((image, index) => (
-          <Image
-            key={image.contentDigest}
-            visible={isPhone || index === imageIndex}
-          >
-            <Img
-              sizes={image.sizes}
-              style={{ height: isPhone ? 'auto' : '100%' }}
-              imgStyle={{
-                objectFit: 'contain',
-              }}
-            />
-          </Image>
-        ))}
+        {images.map(
+          (image, index) =>
+            isPhone || index === imageIndex ? (
+              <Image key={image.contentDigest}>
+                <Img
+                  sizes={image.sizes}
+                  style={{ height: isPhone ? 'auto' : '100%' }}
+                  imgStyle={{
+                    objectFit: 'contain',
+                  }}
+                />
+              </Image>
+            ) : null
+        )}
         {isPhone ? null : (
           <Next onClick={next}>
             <StyledNextIcon />
