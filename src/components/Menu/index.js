@@ -117,7 +117,7 @@ const Menu = ({ toggle, isOpen, albums, menuSlideoutRef }) => (
         to="/"
         color="black"
         fontFamily="body"
-        fontSize={['l', 'xl']}
+        fontSize={['m', 'l']}
         fontWeight="bold"
         display="block"
         mb={2}
