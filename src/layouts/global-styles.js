@@ -20,10 +20,4 @@ injectGlobal`
   * {
     box-sizing: border-box;
   }
-
-  /* TODO: find more localized solution */
-  .gatsby-image-outer-wrapper {
-    width: 100%;
-    height: 100%;
-  }
 `;
