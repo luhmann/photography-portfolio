@@ -14,9 +14,16 @@ $ yarn build
 
 ## Deploy
 
-Install `netlifyctl`: https://github.com/netlify/netlifyctl
+Install gsutil and setup
 
-```sh
-$ gatsby build
-$ netlifyctl deploy -P public
-```
+Upload new files:
+`$ gsutil rsync -R public gs://www.jfdietrich.com`
+
+That should be enough. But here are some extra commands:
+
+Make objects accessible:
+`$ gsutil iam ch allUsers:objectViewer gs://www.jfdietrich.com`
+
+Set `index.html` and 404-page:
+
+`$ gsutil web set -m index.html -e 404.html gs://www.jfdietrich.com`
