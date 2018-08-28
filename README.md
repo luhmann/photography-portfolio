@@ -17,7 +17,7 @@ $ yarn build
 Install gsutil and setup
 
 Upload new files:
-`$ gsutil rsync -R public gs://www.jfdietrich.com`
+`$ gsutil -m rsync -d -r -c public gs://www.jfdietrich.com`
 
 That should be enough. But here are some extra commands:
 
