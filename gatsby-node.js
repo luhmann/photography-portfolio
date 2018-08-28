@@ -22,7 +22,9 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
     }
 
     result.data.allGalleriesYaml.edges.map(gallery => {
-      const { node: { folderName, path } } = gallery;
+      const {
+        node: { folderName, path },
+      } = gallery;
 
       createPage({
         path,
