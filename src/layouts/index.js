@@ -37,9 +37,18 @@ const Layout = ({ children, albums, location }) => (
     <div>
       <Helmet>
         <title>J F Dietrich Photography</title>
+        <meta
+          name="description"
+          content="Photography by Jan Florian Dietrich from Berlin, Germany"
+        />
         <link
           href="https://fonts.googleapis.com/css?family=Lora:700|Patua+One"
           rel="stylesheet"
+        />
+        <link
+          href="/icons/icon-48x48.png"
+          rel="shortcut icon"
+          type="image/png"
         />
       </Helmet>
       <Background>
