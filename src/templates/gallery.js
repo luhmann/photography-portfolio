@@ -102,10 +102,6 @@ const Gallery = ({ images, title, imageIndex, next, prev }) => (
   <GalleryContainer>
     <Helmet>
       <title>{`${title} - JF Dietrich Photography`}</title>
-      <meta
-        name="description"
-        content="Portfolio of Jan Florian Dietrich an amateur photographer from Berlin, Germany"
-      />
     </Helmet>
     <Prev onClick={prev}>
       <StyledPrevIcon />
