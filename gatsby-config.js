@@ -39,7 +39,7 @@ module.exports = {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: 'J F Dietrich Photography',
-        short_name: 'JFD Photography',
+        short_name: 'JFD',
         start_url: '/',
         background_color: '#000000',
         theme_color: '#CC1F1A',
@@ -47,6 +47,5 @@ module.exports = {
         icon: 'src/assets/favicon.png',
       },
     },
-    `gatsby-plugin-offline`,
   ],
 };
