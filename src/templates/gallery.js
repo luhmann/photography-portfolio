@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Img from 'gatsby-image';
+import KeyHandler from 'react-key-handler';
 import { dec, ifElse, inc } from 'rambda';
 import { compose, mapProps, withStateHandlers } from 'recompose';
 import styled, { injectGlobal } from 'styled-components';
@@ -103,6 +104,8 @@ const Gallery = ({ images, title, imageIndex, next, prev }) => (
     <Helmet>
       <title>{`${title} - JF Dietrich Photography`}</title>
     </Helmet>
+    <KeyHandler keyValue="ArrowRight" onKeyHandle={next} />
+    <KeyHandler keyValue="ArrowLeft" onKeyHandle={prev} />
     <Prev onClick={prev}>
       <StyledPrevIcon />
     </Prev>
