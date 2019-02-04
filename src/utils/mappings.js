@@ -7,7 +7,7 @@ const flattenAllGalleriesGraphQLResponse = response =>
   }));
 
 export const mapAllGalleriesGraphQLResponse = pipe(
-  pathOr([], 'data.allGalleriesYaml.group'),
+  pathOr([], 'allGalleriesYaml.group'),
   flattenAllGalleriesGraphQLResponse
 );
 
@@ -16,8 +16,13 @@ const flattenGalleryImagesGraphQLResponse = response =>
     .filter(item => item.node && item.node.childImageSharp)
     .map(
       ({
-        node: { childImageSharp: { sizes, internal: { contentDigest } } },
-      }) => ({ sizes, contentDigest })
+        node: {
+          childImageSharp: {
+            fluid,
+            internal: { contentDigest },
+          },
+        },
+      }) => ({ fluid, contentDigest })
     );
 
 export const mapGalleryImagesGraphQLResponse = pipe(

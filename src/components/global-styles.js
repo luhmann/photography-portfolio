@@ -1,7 +1,7 @@
-import { injectGlobal } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 import { mediaScreen } from '../theme';
 
-injectGlobal`
+export const RootPageStyle = createGlobalStyle`
   body,
   html {
     background-color: #22292F;

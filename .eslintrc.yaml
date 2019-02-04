@@ -1,16 +1,14 @@
 ---
 extends:
-- xo
-- xo-react/space
-- prettier
-- prettier/react
-- plugin:import/errors
-- plugin:import/warnings
+  - xo
+  - xo-react/space
+  - prettier
+  - prettier/react
+  - plugin:import/errors
+  - plugin:import/warnings
 
-globals:
-  "graphql": true
 env:
-  "browser": true
+  'browser': true
 rules:
   import/order: 2
-  no-unused-expressions: ["error", { "allowTaggedTemplates": true }]
+  no-unused-expressions: ['error', { 'allowTaggedTemplates': true }]

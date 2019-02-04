@@ -25,8 +25,7 @@ module.exports = {
     `gatsby-plugin-sharp`,
     // Enable styled components
     `gatsby-plugin-styled-components`,
-    // Use Gatsby with React 16, can be removed once gatsby v2 comes out
-    `gatsby-plugin-react-next`,
+    // Optimize svgs
     {
       resolve: 'gatsby-plugin-svgr',
       options: {

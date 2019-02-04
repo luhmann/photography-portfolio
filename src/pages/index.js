@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, lifecycle, mapProps, withStateHandlers } from 'recompose';
 import Img from 'gatsby-image';
-import Link from 'gatsby-link';
+import { Link, graphql } from 'gatsby';
 import { ifElse, inc } from 'rambda';
 import styled, { css } from 'styled-components';
 import { themeGet } from 'styled-system';
+
 import { mapGalleryImagesGraphQLResponse } from '../utils/mappings';
-import { ContentContainer, Logo } from '../components';
+import { ContentContainer, Layout, Logo } from '../components';
 import { mediaScreen } from '../theme';
 
 const Image = styled.div`
@@ -101,35 +102,40 @@ let intervalId;
 const clearSideshowInterval = ({ intervalId }) =>
   window.clearInterval(intervalId);
 
-const IndexPage = ({ images, imageIndex }) => (
-  <ContentContainer>
-    {images.map((image, index) => (
-      <Image key={image.contentDigest} invisible={index !== imageIndex}>
-        <Img sizes={image.sizes} style={{ height: '100%' }} />
-      </Image>
-    ))}
-    <Footer>
-      <IndexLogo color="white" mb={[5, 0]} />
-      <PortfolioButton to="/portraits/">Portfolio</PortfolioButton>
-    </Footer>
-  </ContentContainer>
+const IndexPage = ({ images, imageIndex, location }) => (
+  <Layout location={location}>
+    <ContentContainer>
+      {images.map((image, index) => (
+        <Image key={image.contentDigest} invisible={index !== imageIndex}>
+          <Img fluid={image.fluid} style={{ height: '100%' }} />
+        </Image>
+      ))}
+      <Footer>
+        <IndexLogo color="white" mb={[5, 0]} />
+        <PortfolioButton to="/portraits/">Portfolio</PortfolioButton>
+      </Footer>
+    </ContentContainer>
+  </Layout>
 );
 
 IndexPage.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.shape({
-      sizes: PropTypes.object.isRequired,
+      fluid: PropTypes.object.isRequired,
       contentDigest: PropTypes.string.isRequired,
     })
   ).isRequired,
   imageIndex: PropTypes.number.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default compose(
   mapProps(props => ({
+    ...props,
     images: mapGalleryImagesGraphQLResponse(props),
   })),
-
   withStateHandlers(
     ({ initialImageIndex = 0 }) => ({ imageIndex: initialImageIndex }),
     {
