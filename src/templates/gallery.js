@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Img from 'gatsby-image';
+import { graphql } from 'gatsby';
 import KeyHandler from 'react-key-handler';
 import { dec, ifElse, inc } from 'rambda';
 import { compose, mapProps, withStateHandlers } from 'recompose';
-import styled, { injectGlobal } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { themeGet } from 'styled-system';
 import { ReactComponent as PrevIcon } from '../assets/prev.svg';
 import { ReactComponent as NextIcon } from '../assets/next.svg';
-import { ContentContainer } from '../components';
+import { ContentContainer, Layout } from '../components';
 import {
   mapGalleryImagesGraphQLResponse,
   mapSingleGalleryYamlGraphQLResponse,
@@ -34,7 +35,7 @@ const GalleryContainer = styled(ContentContainer)`
 // because with styled-components (and css) we only can easily stile "downwards" into the DOM tree
 // to work around this we define a global classname and apply it conditionally
 const outerWrapperHiddenClassName = 'outerWrapper-hidden';
-injectGlobal`
+const GatsbyImageOverwriteStyles = createGlobalStyle`
   .gatsby-image-outer-wrapper {
     width: 100%;
     height: 100%;
@@ -48,10 +49,9 @@ injectGlobal`
   }
 `;
 
-const Image = styled(Img).attrs({
-  outerWrapperClassName: props =>
-    props.visible ? null : outerWrapperHiddenClassName,
-})`
+const Image = styled(Img).attrs(props => ({
+  outerWrapperClassName: props.visible ? null : outerWrapperHiddenClassName,
+}))`
   align-items: center;
   display: ${props => (props.visible ? 'flex' : 'none')};
   height: 100%;
@@ -80,7 +80,7 @@ const Prev = styled.a`
   `};
 `;
 
-const Next = Prev.extend`
+const Next = styled(Prev)`
   cursor: e-resize;
   left: auto;
   right: 0;
@@ -99,36 +99,39 @@ const StyledNextIcon = styled(NextIcon)`
   width: ${themeGet('space.5')};
 `;
 
-const Gallery = ({ images, title, imageIndex, next, prev }) => (
-  <GalleryContainer>
-    <Helmet>
-      <title>{`${title} - JF Dietrich Photography`}</title>
-    </Helmet>
-    <KeyHandler keyValue="ArrowRight" onKeyHandle={next} />
-    <KeyHandler keyValue="ArrowLeft" onKeyHandle={prev} />
-    <Prev onClick={prev}>
-      <StyledPrevIcon />
-    </Prev>
-    {images.map((image, index) => (
-      <Image
-        key={image.contentDigest}
-        visible={imageIndex === index}
-        sizes={image.sizes}
-        imgStyle={{
-          objectFit: 'contain',
-        }}
-      />
-    ))}
-    <Next onClick={next}>
-      <StyledNextIcon />
-    </Next>
-  </GalleryContainer>
+const Gallery = ({ images, title, imageIndex, next, prev, location }) => (
+  <Layout location={location}>
+    <GatsbyImageOverwriteStyles />
+    <GalleryContainer>
+      <Helmet>
+        <title>{`${title} - JF Dietrich Photography`}</title>
+      </Helmet>
+      <KeyHandler keyValue="ArrowRight" onKeyHandle={next} />
+      <KeyHandler keyValue="ArrowLeft" onKeyHandle={prev} />
+      <Prev onClick={prev}>
+        <StyledPrevIcon />
+      </Prev>
+      {images.map((image, index) => (
+        <Image
+          key={image.contentDigest}
+          visible={imageIndex === index}
+          fluid={image.fluid}
+          imgStyle={{
+            objectFit: 'contain',
+          }}
+        />
+      ))}
+      <Next onClick={next}>
+        <StyledNextIcon />
+      </Next>
+    </GalleryContainer>
+  </Layout>
 );
 
 Gallery.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.shape({
-      sizes: PropTypes.object.isRequired,
+      fluid: PropTypes.object.isRequired,
       contentDigest: PropTypes.string.isRequired,
     })
   ).isRequired,
@@ -136,12 +139,16 @@ Gallery.propTypes = {
   imageIndex: PropTypes.number.isRequired,
   next: PropTypes.func.isRequired,
   prev: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 Gallery.displayName = 'Gallery';
 
 export default compose(
   mapProps(props => ({
+    ...props,
     images: mapGalleryImagesGraphQLResponse(props),
     title: mapSingleGalleryYamlGraphQLResponse(props),
   })),

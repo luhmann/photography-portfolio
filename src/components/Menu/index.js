@@ -108,11 +108,11 @@ const controlBodyScroll = ifElse(
 );
 
 const Menu = ({ toggle, isOpen, albums, menuSlideoutRef }) => (
-  <React.Fragment>
-    <Nav onClick={toggle} open={isOpen}>
+  <>
+    <Nav open={isOpen} onClick={toggle}>
       {isOpen ? 'x' : 'menu'}
     </Nav>
-    <MenuSlideout innerRef={menuSlideoutRef} visible={isOpen}>
+    <MenuSlideout ref={menuSlideoutRef} visible={isOpen}>
       {/* <StyledLink
         to="/"
         color="black"
@@ -149,7 +149,7 @@ const Menu = ({ toggle, isOpen, albums, menuSlideoutRef }) => (
         </React.Fragment>
       ))}
     </MenuSlideout>
-  </React.Fragment>
+  </>
 );
 
 Menu.propTypes = {

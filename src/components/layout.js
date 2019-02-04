@@ -1,21 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { graphql, StaticQuery } from 'gatsby';
 import { Helmet } from 'react-helmet';
-import { mapProps } from 'recompose';
 import { ThemeProvider } from 'styled-components';
 import theme from '../theme';
 
-import { Background, Logo, Menu, StyledLink } from '../components/';
+import {
+  Background,
+  Logo,
+  Menu,
+  StyledLink,
+  RootPageStyle,
+} from '../components/';
 import { mapAllGalleriesGraphQLResponse } from '../utils/mappings';
-import './global-styles';
 
 const Header = ({ albums }) => (
-  <React.Fragment>
+  <>
     <StyledLink to="/" color="black">
       <Logo />
     </StyledLink>
     <Menu albums={albums} />
-  </React.Fragment>
+  </>
 );
 
 Header.propTypes = {
@@ -32,9 +37,9 @@ Header.propTypes = {
   ).isRequired,
 };
 
-const Layout = ({ children, albums, location }) => (
+const LayoutComponent = ({ children, albums, location }) => (
   <ThemeProvider theme={theme}>
-    <div>
+    <>
       <Helmet>
         <title>J F Dietrich Photography</title>
         <meta
@@ -51,16 +56,17 @@ const Layout = ({ children, albums, location }) => (
           type="image/png"
         />
       </Helmet>
+      <RootPageStyle />
       <Background>
         {location.pathname === '/' ? null : <Header albums={albums} />}
-        {children()}
+        {children}
       </Background>
-    </div>
+    </>
   </ThemeProvider>
 );
 
-Layout.propTypes = {
-  children: PropTypes.func.isRequired,
+LayoutComponent.propTypes = {
+  children: PropTypes.node.isRequired,
   albums: PropTypes.arrayOf(
     PropTypes.shape({
       albumTitle: PropTypes.string.isRequired,
@@ -77,16 +83,33 @@ Layout.propTypes = {
   }).isRequired,
 };
 
-Layout.displayName = 'Layout';
+LayoutComponent.displayName = 'LayoutComponent';
 
-export default mapProps(props => ({
-  albums: mapAllGalleriesGraphQLResponse(props),
-  location: props.location,
-  children: props.children,
-}))(Layout);
-
-export const pageQuery = graphql`
+const pageQuery = graphql`
   query GalleriesQuery {
     ...allGalleriesYamlFragment
   }
 `;
+
+const Layout = ({ children, location }) => (
+  <StaticQuery
+    query={pageQuery}
+    render={data => (
+      <LayoutComponent
+        albums={mapAllGalleriesGraphQLResponse(data)}
+        location={location}
+      >
+        {children}
+      </LayoutComponent>
+    )}
+  />
+);
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+export default Layout;

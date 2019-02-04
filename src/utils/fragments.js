@@ -1,3 +1,4 @@
+import { graphql } from 'gatsby';
 export const GalleryImagesFragment = graphql`
   fragment GalleryImagesFragment on FileConnection {
     edges {
@@ -6,8 +7,8 @@ export const GalleryImagesFragment = graphql`
           internal {
             contentDigest
           }
-          sizes(maxWidth: 2500, quality: 75) {
-            ...GatsbyImageSharpSizes_withWebp_tracedSVG
+          fluid(maxWidth: 2500, quality: 75) {
+            ...GatsbyImageSharpFluid_withWebp_tracedSVG
           }
         }
       }
@@ -16,7 +17,7 @@ export const GalleryImagesFragment = graphql`
 `;
 
 export const allGalleriesYamlFragment = graphql`
-  fragment allGalleriesYamlFragment on RootQueryType {
+  fragment allGalleriesYamlFragment on Query {
     allGalleriesYaml(sort: { fields: [order] }) {
       group(field: album) {
         fieldValue
@@ -32,7 +33,7 @@ export const allGalleriesYamlFragment = graphql`
 `;
 
 export const singleGalleryYamlFragment = graphql`
-  fragment singleGalleryYamlFragment on RootQueryType {
+  fragment singleGalleryYamlFragment on Query {
     galleriesYaml(folderName: { eq: $folderName }) {
       title
     }
