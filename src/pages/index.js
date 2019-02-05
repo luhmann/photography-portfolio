@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { compose, lifecycle, mapProps, withStateHandlers } from 'recompose';
+import { compose, mapProps } from 'recompose';
 import Img from 'gatsby-image';
 import { Link, graphql } from 'gatsby';
-import { ifElse, inc } from 'rambda';
+import { pipe, tap } from 'rambda';
 import styled, { css } from 'styled-components';
 import { themeGet } from 'styled-system';
 
 import { mapGalleryImagesGraphQLResponse } from '../utils/mappings';
+import { nextStepper } from '../utils/gallery-navigation';
 import { ContentContainer, Layout, Logo } from '../components';
 import { mediaScreen } from '../theme';
 
@@ -98,25 +99,38 @@ const Footer = styled.div`
   `};
 `;
 
-let intervalId;
-const clearSideshowInterval = ({ intervalId }) =>
-  window.clearInterval(intervalId);
+const IndexPage = ({ images, location }) => {
+  const [imageIndex, setImageIndex] = useState(0);
+  const next = pipe(
+    nextStepper(imageIndex, images.length),
+    tap(setImageIndex)
+  );
 
-const IndexPage = ({ images, imageIndex, location }) => (
-  <Layout location={location}>
-    <ContentContainer>
-      {images.map((image, index) => (
-        <Image key={image.contentDigest} invisible={index !== imageIndex}>
-          <Img fluid={image.fluid} style={{ height: '100%' }} />
-        </Image>
-      ))}
-      <Footer>
-        <IndexLogo color="white" mb={[5, 0]} />
-        <PortfolioButton to="/portraits/">Portfolio</PortfolioButton>
-      </Footer>
-    </ContentContainer>
-  </Layout>
-);
+  useEffect(
+    () => {
+      const intervalId = window.setInterval(() => next(imageIndex), 5000);
+
+      return () => window.clearInterval(intervalId);
+    },
+    [imageIndex]
+  );
+
+  return (
+    <Layout location={location}>
+      <ContentContainer>
+        {images.map((image, index) => (
+          <Image key={image.contentDigest} invisible={index !== imageIndex}>
+            <Img fluid={image.fluid} style={{ height: '100%' }} />
+          </Image>
+        ))}
+        <Footer>
+          <IndexLogo color="white" mb={[5, 0]} />
+          <PortfolioButton to="/portraits/">Portfolio</PortfolioButton>
+        </Footer>
+      </ContentContainer>
+    </Layout>
+  );
+};
 
 IndexPage.propTypes = {
   images: PropTypes.arrayOf(
@@ -125,7 +139,6 @@ IndexPage.propTypes = {
       contentDigest: PropTypes.string.isRequired,
     })
   ).isRequired,
-  imageIndex: PropTypes.number.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
@@ -135,28 +148,7 @@ export default compose(
   mapProps(props => ({
     ...props,
     images: mapGalleryImagesGraphQLResponse(props),
-  })),
-  withStateHandlers(
-    ({ initialImageIndex = 0 }) => ({ imageIndex: initialImageIndex }),
-    {
-      next: ({ imageIndex }, { images }) =>
-        ifElse(
-          () => inc(imageIndex) < images.length,
-          () => ({ imageIndex: inc(imageIndex) }),
-          () => ({ imageIndex: 0 })
-        ),
-    }
-  ),
-  lifecycle({
-    componentDidMount() {
-      intervalId = window.setInterval(() => {
-        this.props.next();
-      }, 5000);
-    },
-    componentWillUnmount() {
-      clearSideshowInterval(intervalId);
-    },
-  })
+  }))
 )(IndexPage);
 
 export const IndexImagesQuery = graphql`
