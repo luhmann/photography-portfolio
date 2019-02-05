@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Img from 'gatsby-image';
 import { graphql } from 'gatsby';
 import KeyHandler from 'react-key-handler';
-import { dec, ifElse, inc } from 'rambda';
-import { compose, mapProps, withStateHandlers } from 'recompose';
+import { pipe, tap } from 'rambda';
+import { compose, mapProps } from 'recompose';
 import styled, { createGlobalStyle } from 'styled-components';
 import { themeGet } from 'styled-system';
+
 import { ReactComponent as PrevIcon } from '../assets/prev.svg';
 import { ReactComponent as NextIcon } from '../assets/next.svg';
+import { nextStepper, prevStepper } from '../utils/gallery-navigation';
 import { ContentContainer, Layout } from '../components';
 import {
   mapGalleryImagesGraphQLResponse,
@@ -99,34 +101,48 @@ const StyledNextIcon = styled(NextIcon)`
   width: ${themeGet('space.5')};
 `;
 
-const Gallery = ({ images, title, imageIndex, next, prev, location }) => (
-  <Layout location={location}>
-    <GatsbyImageOverwriteStyles />
-    <GalleryContainer>
-      <Helmet>
-        <title>{`${title} - JF Dietrich Photography`}</title>
-      </Helmet>
-      <KeyHandler keyValue="ArrowRight" onKeyHandle={next} />
-      <KeyHandler keyValue="ArrowLeft" onKeyHandle={prev} />
-      <Prev onClick={prev}>
-        <StyledPrevIcon />
-      </Prev>
-      {images.map((image, index) => (
-        <Image
-          key={image.contentDigest}
-          visible={imageIndex === index}
-          fluid={image.fluid}
-          imgStyle={{
-            objectFit: 'contain',
-          }}
-        />
-      ))}
-      <Next onClick={next}>
-        <StyledNextIcon />
-      </Next>
-    </GalleryContainer>
-  </Layout>
-);
+const Gallery = ({ images, title, location }) => {
+  const [imageIndex, setImageIndex] = useState(0);
+
+  const next = pipe(
+    nextStepper(imageIndex, images.length),
+    tap(setImageIndex)
+  );
+
+  const prev = pipe(
+    prevStepper(imageIndex, images.length),
+    tap(setImageIndex)
+  );
+
+  return (
+    <Layout location={location}>
+      <GatsbyImageOverwriteStyles />
+      <GalleryContainer>
+        <Helmet>
+          <title>{`${title} - JF Dietrich Photography`}</title>
+        </Helmet>
+        <KeyHandler keyValue="ArrowRight" onKeyHandle={next} />
+        <KeyHandler keyValue="ArrowLeft" onKeyHandle={prev} />
+        <Prev onClick={prev}>
+          <StyledPrevIcon />
+        </Prev>
+        {images.map((image, index) => (
+          <Image
+            key={image.contentDigest}
+            visible={imageIndex === index}
+            fluid={image.fluid}
+            imgStyle={{
+              objectFit: 'contain',
+            }}
+          />
+        ))}
+        <Next onClick={next}>
+          <StyledNextIcon />
+        </Next>
+      </GalleryContainer>
+    </Layout>
+  );
+};
 
 Gallery.propTypes = {
   images: PropTypes.arrayOf(
@@ -136,9 +152,6 @@ Gallery.propTypes = {
     })
   ).isRequired,
   title: PropTypes.string.isRequired,
-  imageIndex: PropTypes.number.isRequired,
-  next: PropTypes.func.isRequired,
-  prev: PropTypes.func.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
@@ -151,29 +164,7 @@ export default compose(
     ...props,
     images: mapGalleryImagesGraphQLResponse(props),
     title: mapSingleGalleryYamlGraphQLResponse(props),
-  })),
-  withStateHandlers(
-    ({ initialImageIndex = 0 }) => ({
-      imageIndex: initialImageIndex,
-    }),
-    {
-      next: ({ imageIndex }, { images }) =>
-        ifElse(
-          () => inc(imageIndex) < images.length,
-          () => ({ imageIndex: inc(imageIndex) }),
-          () => ({ imageIndex: 0 })
-        ),
-      prev: ({ imageIndex }, { images }) =>
-        ifElse(
-          () => dec(imageIndex) >= 0,
-          () => ({ imageIndex: dec(imageIndex) }),
-          () => ({ imageIndex: dec(images.length) })
-        ),
-      showIndex: () => ({ nextIndex }) => ({
-        imageIndex: nextIndex,
-      }),
-    }
-  )
+  }))
 )(Gallery);
 
 export const pageQuery = graphql`

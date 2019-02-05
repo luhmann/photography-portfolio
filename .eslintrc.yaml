@@ -7,8 +7,12 @@ extends:
   - plugin:import/errors
   - plugin:import/warnings
 
+plugins:
+  - react/hooks
+
 env:
   'browser': true
 rules:
   import/order: 2
   no-unused-expressions: ['error', { 'allowTaggedTemplates': true }]
+  react-hooks/rules-of-hooks: 'error'
