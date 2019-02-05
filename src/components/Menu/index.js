@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
-import { always, not, ifElse } from 'rambda';
-import { compose, lifecycle, withStateHandlers, withProps } from 'recompose';
+import { always, not, ifElse, pipe, tap } from 'rambda';
 import styled, { css } from 'styled-components';
 import { themeGet } from 'styled-system';
 import { mediaInput, mediaScreen } from '../../theme';
@@ -107,13 +106,24 @@ const controlBodyScroll = ifElse(
   () => clearAllBodyScrollLocks()
 );
 
-const Menu = ({ toggle, isOpen, albums, menuSlideoutRef }) => (
-  <>
-    <Nav open={isOpen} onClick={toggle}>
-      {isOpen ? 'x' : 'menu'}
-    </Nav>
-    <MenuSlideout ref={menuSlideoutRef} visible={isOpen}>
-      {/* <StyledLink
+const Menu = ({ albums }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = pipe(
+    () => not(isOpen),
+    tap(setIsOpen)
+  );
+
+  useEffect(() => {
+    controlBodyScroll({ isOpen, menuSlideoutRef });
+  });
+
+  return (
+    <>
+      <Nav open={isOpen} onClick={toggle}>
+        {isOpen ? 'x' : 'menu'}
+      </Nav>
+      <MenuSlideout ref={menuSlideoutRef} visible={isOpen}>
+        {/* <StyledLink
         to="/"
         color="black"
         fontFamily="body"
@@ -124,37 +134,36 @@ const Menu = ({ toggle, isOpen, albums, menuSlideoutRef }) => (
       >
         Home
       </StyledLink> */}
-      {albums.map(album => (
-        <React.Fragment key={album.albumTitle}>
-          <Album>{album.albumTitle}</Album>
-          {album.galleries.map((gallery, index) => (
-            <StyledLink
-              key={gallery.path}
-              to={gallery.path}
-              color="black"
-              fontFamily="body"
-              fontSize={['m', 'l']}
-              fontWeight="bold"
-              display="block"
-              mb={ifElse(
-                () => index === album.galleries.length - 1,
-                always(4),
-                always(1)
-              )()}
-              onClick={toggle}
-            >
-              {gallery.title}
-            </StyledLink>
-          ))}
-        </React.Fragment>
-      ))}
-    </MenuSlideout>
-  </>
-);
+        {albums.map(album => (
+          <React.Fragment key={album.albumTitle}>
+            <Album>{album.albumTitle}</Album>
+            {album.galleries.map((gallery, index) => (
+              <StyledLink
+                key={gallery.path}
+                to={gallery.path}
+                color="black"
+                fontFamily="body"
+                fontSize={['m', 'l']}
+                fontWeight="bold"
+                display="block"
+                mb={ifElse(
+                  () => index === album.galleries.length - 1,
+                  always(4),
+                  always(1)
+                )()}
+                onClick={toggle}
+              >
+                {gallery.title}
+              </StyledLink>
+            ))}
+          </React.Fragment>
+        ))}
+      </MenuSlideout>
+    </>
+  );
+};
 
 Menu.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  toggle: PropTypes.func.isRequired,
   albums: PropTypes.arrayOf(
     PropTypes.shape({
       albumTitle: PropTypes.string.isRequired,
@@ -166,27 +175,6 @@ Menu.propTypes = {
       ).isRequired,
     })
   ).isRequired,
-  menuSlideoutRef: PropTypes.shape({
-    current: PropTypes.any,
-  }).isRequired,
 };
 
-export default compose(
-  withStateHandlers(
-    ({ initialIsOpen = false }) => ({
-      isOpen: initialIsOpen,
-    }),
-    {
-      toggle: ({ isOpen }) => () => ({ isOpen: not(isOpen) }),
-    }
-  ),
-  withProps({
-    menuSlideoutRef,
-  }),
-  lifecycle({
-    componentDidUpdate() {
-      const { isOpen, menuSlideoutRef } = this.props;
-      controlBodyScroll({ isOpen, menuSlideoutRef });
-    },
-  })
-)(Menu);
+export default Menu;
