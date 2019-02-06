@@ -9,14 +9,16 @@ import { compose, mapProps } from 'recompose';
 import styled, { createGlobalStyle } from 'styled-components';
 import { themeGet } from 'styled-system';
 
-import { ReactComponent as PrevIcon } from '../assets/prev.svg';
-import { ReactComponent as NextIcon } from '../assets/next.svg';
-import { nextStepper, prevStepper } from '../utils/gallery-navigation';
-import { ContentContainer, Layout } from '../components';
+import { ReactComponent as PrevIcon } from 'assets/prev.svg';
+import { ReactComponent as NextIcon } from 'assets/next.svg';
+import { nextStepper, prevStepper } from 'utils/gallery-navigation';
+import { locationType } from 'utils/types';
+import { ContentContainer, Layout } from 'components';
 import {
   mapGalleryImagesGraphQLResponse,
   mapSingleGalleryYamlGraphQLResponse,
-} from '../utils/mappings';
+} from 'utils/mappings';
+
 import { mediaScreen } from '../theme';
 
 const GalleryContainer = styled(ContentContainer)`
@@ -101,7 +103,7 @@ const StyledNextIcon = styled(NextIcon)`
   width: ${themeGet('space.5')};
 `;
 
-const Gallery = ({ images, title, location }) => {
+export const Gallery = ({ images, title, location }) => {
   const [imageIndex, setImageIndex] = useState(0);
 
   const next = pipe(
@@ -152,9 +154,7 @@ Gallery.propTypes = {
     })
   ).isRequired,
   title: PropTypes.string.isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
+  location: locationType.isRequired,
 };
 
 Gallery.displayName = 'Gallery';

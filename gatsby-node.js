@@ -38,3 +38,18 @@ exports.createPages = ({ actions, graphql }) => {
     return Promise.resolve();
   });
 };
+
+exports.onCreateWebpackConfig = ({ stage, actions }) => {
+  actions.setWebpackConfig({
+    resolve: {
+      modules: ['node_modules'],
+      alias: {
+        assets: path.resolve(__dirname, 'src', 'assets'),
+        components: path.resolve(__dirname, 'src', 'components'),
+        pages: path.resolve(__dirname, 'src', 'pages'),
+        templates: path.resolve(__dirname, 'src', 'templates'),
+        utils: path.resolve(__dirname, 'src', 'utils'),
+      },
+    },
+  });
+};

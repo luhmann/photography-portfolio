@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render as expected - when not home-page 1`] = `
+<main
+  class="sc-bdVaJa cpfohf"
+>
+  <a
+    class="sc-bZQynM iMHTUI"
+    color="black"
+    href="/"
+  >
+    <h1
+      class="sc-htpNat iiKRXJ"
+    >
+      JF Dietrich Photography
+    </h1>
+  </a>
+  <a
+    class="sc-bxivhb bugtHR"
+  >
+    menu
+  </a>
+  <nav
+    class="sc-ifAKCX dQsBdt"
+    data-testid="menu-slideout"
+  >
+    <div
+      class="sc-EHOje kQpzht"
+      data-testid="menu-album"
+    >
+      albumTitle
+    </div>
+    <a
+      class="sc-bZQynM ADRzZ"
+      color="black"
+      data-testid="menu-gallery"
+      display="block"
+      font-family="body"
+      font-size="m,l"
+      font-weight="bold"
+      href="path"
+      mb="4"
+    >
+      title
+    </a>
+  </nav>
+  children
+</main>
+`;
+
+exports[`should render as expected - when on home-page 1`] = `
+<main
+  class="sc-bdVaJa cpfohf"
+>
+  children
+</main>
+`;
