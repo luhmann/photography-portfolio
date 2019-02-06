@@ -14,7 +14,14 @@ $ yarn build
 
 ## Deploy
 
-Install gsutil and setup
+Install gsutil and setup:
+
+```bash
+# see https://cloud.google.com/storage/docs/gsutil_install?hl=de
+curl https://sdk.cloud.google.com | bash
+reload
+gcloud init
+```
 
 Upload new files:
 `$ gsutil -m rsync -d -r -c public gs://www.jfdietrich.com`
