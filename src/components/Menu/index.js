@@ -54,14 +54,16 @@ const MenuSlideout = styled.nav`
   right: -50vw;
   text-align: right;
   top: ${themeGet('space.containerBorder')};
-  transition: right 0.5s ease-in-out;
+  transition: right 0.5s ease-in-out, opacity 0.5s ease-in-out;
   width: 50vw;
+  opacity: 0;
   z-index: ${themeGet('zIndex.middle')};
 
   ${props =>
     props.visible &&
     css`
       right: ${themeGet('space.containerBorder')};
+      opacity: 1;
     `};
 
   ${mediaScreen.md`
@@ -76,7 +78,7 @@ const MenuSlideout = styled.nav`
   )});
     padding: ${themeGet('space.4')} ${themeGet('space.4')};
     top: -100vh;
-    transition: top 0.5s ease-in-out;
+    transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out;
     text-align: left;
 
     ${props =>
@@ -122,7 +124,11 @@ const Menu = ({ albums }) => {
       <Nav open={isOpen} onClick={toggle}>
         {isOpen ? 'x' : 'menu'}
       </Nav>
-      <MenuSlideout ref={menuSlideoutRef} visible={isOpen}>
+      <MenuSlideout
+        data-testid="menu-slideout"
+        ref={menuSlideoutRef}
+        visible={isOpen}
+      >
         {/* <StyledLink
         to="/"
         color="black"
@@ -136,12 +142,13 @@ const Menu = ({ albums }) => {
       </StyledLink> */}
         {albums.map(album => (
           <React.Fragment key={album.albumTitle}>
-            <Album>{album.albumTitle}</Album>
+            <Album data-testid="menu-album">{album.albumTitle}</Album>
             {album.galleries.map((gallery, index) => (
               <StyledLink
                 key={gallery.path}
                 to={gallery.path}
                 color="black"
+                data-testid="menu-gallery"
                 fontFamily="body"
                 fontSize={['m', 'l']}
                 fontWeight="bold"
