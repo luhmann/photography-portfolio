@@ -1,5 +1,19 @@
 # J F Dietrich Photography Portfolio Site
 
+## Install
+
+We use a submodule for our assets so clone with `--recursive`
+
+```sh
+$ git clone --recursive git@github.com:luhmann/photography-portfolio.git
+```
+
+If you need to update the info from the assets do
+
+```sh
+git submodule update --recursive --remote
+```
+
 ## Develop
 
 ```sh
