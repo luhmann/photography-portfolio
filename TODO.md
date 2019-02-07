@@ -1,5 +1,0 @@
--   [ ] re-export cake gallery
--   [ ] add a real 404 page
--   [ ] fix fallback fonts when google fonts is blocked
--   [ ] about-page + Datenschutz
--   [ ] Keyboard-Navigation

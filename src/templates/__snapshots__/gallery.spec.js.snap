@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should show last image, when clicking prev 1`] = `
+"Snapshot Diff:
+- First value
++ Second value
+
+@@ -32,11 +32,11 @@
+          <svg
+            class=\\"sc-gZMcBi cxRXTt\\"
+          />
+        </a>
+        <div
+-         class=\\"sc-htoDjs ivNpRq gatsby-image-wrapper\\"
++         class=\\"sc-htoDjs ezRVes gatsby-image-wrapper\\"
+          style=\\"position: relative; overflow: hidden;\\"
+        >
+          <div
+            style=\\"width: 100%; padding-bottom: 66.66666666666667%;\\"
+          />
+@@ -272,11 +272,11 @@
+  /static/digest-6/size/mock-6-1250.jpg 1250w,
+  /static/digest-6/size/mock-6-2250.jpg 2250w\\" sizes=\\"(max-width: 2250px) 100vw, 2250px\\" /&gt;&lt;img src=\\"/static/digest-6/size/mock-6.jpg\\" alt=\\"Gallery title - Image 6\\" style=\\"position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:0.5s;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/&gt;&lt;/picture&gt;
+          </noscript>
+        </div>
+        <div
+-         class=\\"sc-htoDjs ezRVes gatsby-image-wrapper\\"
++         class=\\"sc-htoDjs ivNpRq gatsby-image-wrapper\\"
+          style=\\"position: relative; overflow: hidden;\\"
+        >
+          <div
+            style=\\"width: 100%; padding-bottom: 66.66666666666667%;\\"
+          />"
+`;
+
+exports[`should show the second image, when clicking next 1`] = `
+"Snapshot Diff:
+- First value
++ Second value
+
+@@ -32,11 +32,11 @@
+          <svg
+            class=\\"sc-gZMcBi cxRXTt\\"
+          />
+        </a>
+        <div
+-         class=\\"sc-htoDjs ivNpRq gatsby-image-wrapper\\"
++         class=\\"sc-htoDjs ezRVes gatsby-image-wrapper\\"
+          style=\\"position: relative; overflow: hidden;\\"
+        >
+          <div
+            style=\\"width: 100%; padding-bottom: 66.66666666666667%;\\"
+          />
+@@ -72,11 +72,11 @@
+  /static/digest-1/size/mock-1-1250.jpg 1250w,
+  /static/digest-1/size/mock-1-2250.jpg 2250w\\" sizes=\\"(max-width: 2250px) 100vw, 2250px\\" /&gt;&lt;img src=\\"/static/digest-1/size/mock-1.jpg\\" alt=\\"Gallery title - Image 1\\" style=\\"position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:0.5s;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/&gt;&lt;/picture&gt;
+          </noscript>
+        </div>
+        <div
+-         class=\\"sc-htoDjs ezRVes gatsby-image-wrapper\\"
++         class=\\"sc-htoDjs ivNpRq gatsby-image-wrapper\\"
+          style=\\"position: relative; overflow: hidden;\\"
+        >
+          <div
+            style=\\"width: 100%; padding-bottom: 66.66666666666667%;\\"
+          />"
+`;
