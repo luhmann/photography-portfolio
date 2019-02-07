@@ -46,7 +46,7 @@ gcloud init
 All-in-one build & deploy:
 
 ```sh
-$ yarn deploy`
+$ yarn deploy
 ```
 
 Upload new files:
