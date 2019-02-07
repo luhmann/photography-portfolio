@@ -4,6 +4,9 @@ import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import { always, not, ifElse, pipe, tap } from 'rambda';
 import styled, { css } from 'styled-components';
 import { themeGet } from 'styled-system';
+
+import { albumInfoType } from 'utils/types';
+
 import { mediaInput, mediaScreen } from '../../theme';
 
 import { StyledLink } from '../';
@@ -171,17 +174,7 @@ const Menu = ({ albums }) => {
 };
 
 Menu.propTypes = {
-  albums: PropTypes.arrayOf(
-    PropTypes.shape({
-      albumTitle: PropTypes.string.isRequired,
-      galleries: PropTypes.arrayOf(
-        PropTypes.shape({
-          title: PropTypes.string.isRequired,
-          path: PropTypes.string.isRequired,
-        })
-      ).isRequired,
-    })
-  ).isRequired,
+  albums: PropTypes.arrayOf(albumInfoType).isRequired,
 };
 
 export default Menu;

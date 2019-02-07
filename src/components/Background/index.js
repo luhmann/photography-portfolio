@@ -14,8 +14,6 @@ const Background = styled.main`
    `};
 `;
 
-Background.propTypes = {};
-
 Background.displayName = 'Background';
 
 export default Background;
