@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Img from 'gatsby-image';
@@ -12,7 +12,7 @@ import { themeGet } from 'styled-system';
 import { ReactComponent as PrevIcon } from 'assets/prev.svg';
 import { ReactComponent as NextIcon } from 'assets/next.svg';
 import { nextStepper, prevStepper } from 'utils/gallery-navigation';
-import { locationType } from 'utils/types';
+import { locationType, imageType } from 'utils/types';
 import { ContentContainer, Layout } from 'components';
 import {
   mapGalleryImagesGraphQLResponse,
@@ -125,7 +125,7 @@ export const Gallery = ({ images, title, location }) => {
         </Helmet>
         <KeyHandler keyValue="ArrowRight" onKeyHandle={next} />
         <KeyHandler keyValue="ArrowLeft" onKeyHandle={prev} />
-        <Prev onClick={prev}>
+        <Prev data-testid="gallery-prev" onClick={prev}>
           <StyledPrevIcon />
         </Prev>
         {images.map((image, index) => (
@@ -133,12 +133,13 @@ export const Gallery = ({ images, title, location }) => {
             key={image.contentDigest}
             visible={imageIndex === index}
             fluid={image.fluid}
+            alt={`Gallery ${title} - Image ${index + 1}`}
             imgStyle={{
               objectFit: 'contain',
             }}
           />
         ))}
-        <Next onClick={next}>
+        <Next data-testid="gallery-next" onClick={next}>
           <StyledNextIcon />
         </Next>
       </GalleryContainer>
@@ -147,12 +148,7 @@ export const Gallery = ({ images, title, location }) => {
 };
 
 Gallery.propTypes = {
-  images: PropTypes.arrayOf(
-    PropTypes.shape({
-      fluid: PropTypes.object.isRequired,
-      contentDigest: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  images: PropTypes.arrayOf(imageType).isRequired,
   title: PropTypes.string.isRequired,
   location: locationType.isRequired,
 };

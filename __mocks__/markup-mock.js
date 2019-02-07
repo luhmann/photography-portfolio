@@ -1,1 +1,1 @@
-module.exports = { ReactComponent: '<svg />' };
+module.exports = { ReactComponent: 'svg' };

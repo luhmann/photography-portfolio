@@ -8,3 +8,7 @@ import 'react-testing-library/cleanup-after-each';
 
 import { init } from 'react-generate-props';
 init();
+
+import { toMatchDiffSnapshot } from 'snapshot-diff';
+
+expect.extend({ toMatchDiffSnapshot });
