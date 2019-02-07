@@ -14,6 +14,39 @@ If you need to update the info from the assets do
 git submodule update --recursive --remote
 ```
 
+The expected folder-/file-structure of the data-folder is:
+
+```
+|-- galleries
+|   |-- gallery-1.yaml
+|   |-- gallery-2.yaml
+|   `-- gallery-3.yaml
+`-- images
+    |-- gallery-1
+    |-- gallery-2
+    `-- gallery-3
+```
+
+In `images` are folders of the same name as in galleries, which contain the images in an ordered fashion:
+
+```
+|-- 00__DSC2799.jpg
+|-- 01__DSC2801.jpg
+|-- 02__DSC2977.jpg
+|-- 03__DSC2855.jpg
+`-- 04__DSC2821.jpg
+```
+
+The yaml-files for the galleries have this format:
+
+```
+title: Gallery Title
+album: Places <-- group galleries in albums
+folderName: gallery-1 <-- name of folder in `images`
+path: /barcelona/ <-- url this gallery is supposed to be accessible under
+order: 20 <-- number thats indicates the position of this album in the menu
+```
+
 ## Develop
 
 ```sh
