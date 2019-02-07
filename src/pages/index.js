@@ -7,9 +7,12 @@ import { pipe, tap } from 'rambda';
 import styled, { css } from 'styled-components';
 import { themeGet } from 'styled-system';
 
-import { mapGalleryImagesGraphQLResponse } from '../utils/mappings';
-import { nextStepper } from '../utils/gallery-navigation';
-import { ContentContainer, Layout, Logo } from '../components';
+import { mapGalleryImagesGraphQLResponse } from 'utils/mappings';
+import { nextStepper } from 'utils/gallery-navigation';
+import { useInterval } from 'utils/hooks';
+import { imageType, locationType } from 'utils/types';
+import { ContentContainer, Layout, Logo } from 'components';
+
 import { mediaScreen } from '../theme';
 
 const Image = styled.div`
@@ -58,7 +61,7 @@ const PortfolioButton = styled(Link)`
   background-color: rgba(0, 0, 0, 0.05);
   border: 2px solid ${themeGet('colors.white')};
   display: inline-block;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serf;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: ${themeGet('fontSizes.sm')};
   color: ${themeGet('colors.white')};
   letter-spacing: 1px;
@@ -99,33 +102,34 @@ const Footer = styled.div`
   `};
 `;
 
-const IndexPage = ({ images, location }) => {
+export const IMAGE_DISPLAY_DURATION = 5000;
+
+export const IndexPage = ({ images, location }) => {
   const [imageIndex, setImageIndex] = useState(0);
   const next = pipe(
     nextStepper(imageIndex, images.length),
     tap(setImageIndex)
   );
 
-  useEffect(
-    () => {
-      const intervalId = window.setInterval(() => next(imageIndex), 5000);
-
-      return () => window.clearInterval(intervalId);
-    },
-    [imageIndex]
-  );
+  useInterval(() => next(imageIndex), IMAGE_DISPLAY_DURATION);
 
   return (
     <Layout location={location}>
       <ContentContainer>
         {images.map((image, index) => (
           <Image key={image.contentDigest} invisible={index !== imageIndex}>
-            <Img fluid={image.fluid} style={{ height: '100%' }} />
+            <Img
+              fluid={image.fluid}
+              alt={`Slideshow Image-${index + 1}`}
+              style={{ height: '100%' }}
+            />
           </Image>
         ))}
         <Footer>
-          <IndexLogo color="white" mb={[5, 0]} />
-          <PortfolioButton to="/portraits/">Portfolio</PortfolioButton>
+          <IndexLogo data-testid="home-logo" color="white" mb={[5, 0]} />
+          <PortfolioButton data-testid="home-enter-button" to="/portraits/">
+            Portfolio
+          </PortfolioButton>
         </Footer>
       </ContentContainer>
     </Layout>
@@ -133,15 +137,8 @@ const IndexPage = ({ images, location }) => {
 };
 
 IndexPage.propTypes = {
-  images: PropTypes.arrayOf(
-    PropTypes.shape({
-      fluid: PropTypes.object.isRequired,
-      contentDigest: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
+  images: PropTypes.arrayOf(imageType).isRequired,
+  location: locationType.isRequired,
 };
 
 export default compose(

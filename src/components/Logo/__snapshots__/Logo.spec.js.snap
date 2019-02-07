@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render as expected 1`] = `
+<h1
+  class="sc-bdVaJa NctWQ"
+>
+  JF Dietrich Photography
+</h1>
+`;

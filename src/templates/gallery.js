@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Img from 'gatsby-image';
@@ -9,14 +9,16 @@ import { compose, mapProps } from 'recompose';
 import styled, { createGlobalStyle } from 'styled-components';
 import { themeGet } from 'styled-system';
 
-import { ReactComponent as PrevIcon } from '../assets/prev.svg';
-import { ReactComponent as NextIcon } from '../assets/next.svg';
-import { nextStepper, prevStepper } from '../utils/gallery-navigation';
-import { ContentContainer, Layout } from '../components';
+import { ReactComponent as PrevIcon } from 'assets/prev.svg';
+import { ReactComponent as NextIcon } from 'assets/next.svg';
+import { nextStepper, prevStepper } from 'utils/gallery-navigation';
+import { locationType, imageType } from 'utils/types';
+import { ContentContainer, Layout } from 'components';
 import {
   mapGalleryImagesGraphQLResponse,
   mapSingleGalleryYamlGraphQLResponse,
-} from '../utils/mappings';
+} from 'utils/mappings';
+
 import { mediaScreen } from '../theme';
 
 const GalleryContainer = styled(ContentContainer)`
@@ -101,7 +103,7 @@ const StyledNextIcon = styled(NextIcon)`
   width: ${themeGet('space.5')};
 `;
 
-const Gallery = ({ images, title, location }) => {
+export const Gallery = ({ images, title, location }) => {
   const [imageIndex, setImageIndex] = useState(0);
 
   const next = pipe(
@@ -123,7 +125,7 @@ const Gallery = ({ images, title, location }) => {
         </Helmet>
         <KeyHandler keyValue="ArrowRight" onKeyHandle={next} />
         <KeyHandler keyValue="ArrowLeft" onKeyHandle={prev} />
-        <Prev onClick={prev}>
+        <Prev data-testid="gallery-prev" onClick={prev}>
           <StyledPrevIcon />
         </Prev>
         {images.map((image, index) => (
@@ -131,12 +133,13 @@ const Gallery = ({ images, title, location }) => {
             key={image.contentDigest}
             visible={imageIndex === index}
             fluid={image.fluid}
+            alt={`Gallery ${title} - Image ${index + 1}`}
             imgStyle={{
               objectFit: 'contain',
             }}
           />
         ))}
-        <Next onClick={next}>
+        <Next data-testid="gallery-next" onClick={next}>
           <StyledNextIcon />
         </Next>
       </GalleryContainer>
@@ -145,16 +148,9 @@ const Gallery = ({ images, title, location }) => {
 };
 
 Gallery.propTypes = {
-  images: PropTypes.arrayOf(
-    PropTypes.shape({
-      fluid: PropTypes.object.isRequired,
-      contentDigest: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  images: PropTypes.arrayOf(imageType).isRequired,
   title: PropTypes.string.isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
+  location: locationType.isRequired,
 };
 
 Gallery.displayName = 'Gallery';
