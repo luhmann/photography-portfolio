@@ -1,4 +1,4 @@
-# J F Dietrich Photography Portfolio Site
+# 💅 J F Dietrich Photography Portfolio Site
 
 ## Install
 
@@ -11,7 +11,7 @@ $ git clone --recursive git@github.com:luhmann/photography-portfolio.git
 If you need to update the info from the assets do
 
 ```sh
-git submodule update --recursive --remote
+$ git submodule update --recursive --remote
 ```
 
 The expected folder-/file-structure of the data-folder is:
