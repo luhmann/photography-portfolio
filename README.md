@@ -12,6 +12,12 @@ $ yarn develop
 $ yarn build
 ```
 
+## Test
+
+```sh
+$ yarn test
+```
+
 ## Deploy
 
 Install gsutil and setup:
@@ -21,6 +27,12 @@ Install gsutil and setup:
 curl https://sdk.cloud.google.com | bash
 reload
 gcloud init
+```
+
+All-in-one build & deploy:
+
+```sh
+$ yarn deploy`
 ```
 
 Upload new files:
