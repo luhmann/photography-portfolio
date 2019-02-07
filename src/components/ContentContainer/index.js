@@ -11,4 +11,6 @@ const ContentContainer = styled.div`
   `};
 `;
 
+ContentContainer.displayName = 'ContentContainer';
+
 export default ContentContainer;
