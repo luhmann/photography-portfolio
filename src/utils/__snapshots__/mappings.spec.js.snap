@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`\`mapGalleryImagesGraphQLResponse\` should map as expected - when the correct input data is required 1`] = `
+Array [
+  Object {
+    "contentDigest": "39e6e521dca957bb39471c85a136cecc",
+    "fluid": Object {
+      "src": "/static/39e6e521dca957bb39471c85a136cecc/a01f0/00__MG_3527.jpg",
+      "srcSet": "/static/39e6e521dca957bb39471c85a136cecc/76a60/00__MG_3527.jpg 625w,
+/static/39e6e521dca957bb39471c85a136cecc/b87b4/00__MG_3527.jpg 1250w,
+/static/39e6e521dca957bb39471c85a136cecc/a01f0/00__MG_3527.jpg 2250w",
+      "srcWebp": "/static/39e6e521dca957bb39471c85a136cecc/25b33/00__MG_3527.webp",
+    },
+  },
+  Object {
+    "contentDigest": "16c87d7eab2dd5c22da02eb321ebed8b",
+    "fluid": Object {
+      "aspectRatio": 1.5,
+      "src": "/static/16c87d7eab2dd5c22da02eb321ebed8b/a01f0/01__MG_3956.jpg",
+      "srcSet": "/static/16c87d7eab2dd5c22da02eb321ebed8b/76a60/01__MG_3956.jpg 625w,
+/static/16c87d7eab2dd5c22da02eb321ebed8b/b87b4/01__MG_3956.jpg 1250w,
+/static/16c87d7eab2dd5c22da02eb321ebed8b/a01f0/01__MG_3956.jpg 2250w",
+    },
+  },
+]
+`;
