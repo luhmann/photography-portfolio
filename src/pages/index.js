@@ -7,9 +7,11 @@ import { pipe, tap } from 'rambda';
 import styled, { css } from 'styled-components';
 import { themeGet } from 'styled-system';
 
-import { mapGalleryImagesGraphQLResponse } from '../utils/mappings';
-import { nextStepper } from '../utils/gallery-navigation';
-import { ContentContainer, Layout, Logo } from '../components';
+import { mapGalleryImagesGraphQLResponse } from 'utils/mappings';
+import { nextStepper } from 'utils/gallery-navigation';
+import { useInterval } from 'utils/hooks';
+import { ContentContainer, Layout, Logo } from 'components';
+
 import { mediaScreen } from '../theme';
 
 const Image = styled.div`
@@ -106,14 +108,7 @@ const IndexPage = ({ images, location }) => {
     tap(setImageIndex)
   );
 
-  useEffect(
-    () => {
-      const intervalId = window.setInterval(() => next(imageIndex), 5000);
-
-      return () => window.clearInterval(intervalId);
-    },
-    [imageIndex]
-  );
+  useInterval(() => next(imageIndex), 5000);
 
   return (
     <Layout location={location}>
