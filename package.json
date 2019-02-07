@@ -33,12 +33,13 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write 'src/**/*.js'",
-    "deploy": "gsutil -m rsync -d -r -c public gs://www.jfdietrich.com",
+    "deploy": "yarn build && cli-confirm \"Do you really want to deploy (y)?\" && gsutil -m rsync -d -r -c public gs://www.jfdietrich.com",
     "test": "jest"
   },
   "devDependencies": {
     "babel-jest": "^24.1.0",
     "babel-preset-gatsby": "^0.1.6",
+    "cli-confirm": "^1.0.1",
     "eslint": "^5.11.1",
     "eslint-config-prettier": "^3.3.0",
     "eslint-config-xo": "^0.25.1",
