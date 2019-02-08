@@ -71,9 +71,9 @@ Install gsutil and setup:
 
 ```bash
 # see https://cloud.google.com/storage/docs/gsutil_install?hl=de
-curl https://sdk.cloud.google.com | bash
-reload
-gcloud init
+$ curl https://sdk.cloud.google.com | bash
+$ reload
+$ gcloud init
 ```
 
 All-in-one build & deploy:
