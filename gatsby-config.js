@@ -33,6 +33,12 @@ module.exports = {
         viewBox: false,
       },
     },
+    {
+      resolve: 'gatsby-plugin-html-attributes',
+      options: {
+        lang: 'en',
+      },
+    },
     // Enable pwa
     {
       resolve: `gatsby-plugin-manifest`,
