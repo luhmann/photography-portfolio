@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, act } from 'react-testing-library';
+import { render, act } from 'react-testing-library';
 import generateProps from 'react-generate-props';
 import { StaticQuery } from 'gatsby';
 

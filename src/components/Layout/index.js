@@ -4,10 +4,11 @@ import { graphql, StaticQuery } from 'gatsby';
 import { Helmet } from 'react-helmet';
 import { ThemeProvider } from 'styled-components';
 
-import theme from '../../theme';
 import { Background, Logo, Menu, StyledLink, RootPageStyle } from 'components/';
 import { mapAllGalleriesGraphQLResponse } from 'utils/mappings';
 import { albumInfoType, locationType } from 'utils/types';
+
+import theme from '../../theme';
 
 const Header = ({ albums }) => (
   <>

@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+
 import { mediaScreen } from '../theme';
 
 export const RootPageStyle = createGlobalStyle`

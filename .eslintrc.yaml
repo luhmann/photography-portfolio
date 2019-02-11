@@ -17,8 +17,14 @@ env:
   jest/globals: true
 
 rules:
-  no-unused-expressions: ['error', { 'allowTaggedTemplates': true }]
-  react-hooks/rules-of-hooks: 'error'
+  capitalized-comments:
+    - error
+    - never
+    - ignorePattern: TODO|NOTE|FIXME
+  no-unused-expressions:
+    - error
+    - allowTaggedTemplates: true
+  react-hooks/rules-of-hooks: error
   import/order:
     - error
     - groups:
@@ -30,6 +36,7 @@ rules:
         - index
       newlines-between: always
 
+# resolve webpack-aliases through node-resolver, were not detected otherwise
 settings:
   import/resolver:
     node:

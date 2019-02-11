@@ -8,7 +8,6 @@ import { themeGet } from 'styled-system';
 import { albumInfoType } from 'utils/types';
 
 import { mediaInput, mediaScreen } from '../../theme';
-
 import { StyledLink } from '../';
 
 const Nav = styled.a`
@@ -128,8 +127,8 @@ const Menu = ({ albums }) => {
         {isOpen ? 'x' : 'menu'}
       </Nav>
       <MenuSlideout
-        data-testid="menu-slideout"
         ref={menuSlideoutRef}
+        data-testid="menu-slideout"
         visible={isOpen}
       >
         {/* <StyledLink

@@ -80,7 +80,7 @@ const lineHeights = {
   loose: 2,
 };
 
-// Spacing Scale (used for margin and padding)
+// spacing scale (used for margin and padding)
 const space = {
   containerBorder: '6px',
   containerBorderMobile: '0.25rem',

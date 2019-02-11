@@ -18,14 +18,14 @@ module.exports = {
         path: `${__dirname}/data/galleries`,
       },
     },
-    // Parse Album info
+    // parse album info
     `gatsby-transformer-yaml`,
-    // Parse all images files
+    // parse all images files
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    // Enable styled components
+    // enable styled components
     `gatsby-plugin-styled-components`,
-    // Optimize svgs
+    // optimize svgs
     {
       resolve: 'gatsby-plugin-svgr',
       options: {
@@ -39,7 +39,8 @@ module.exports = {
         lang: 'en',
       },
     },
-    // Enable pwa
+    // enable pwa
+    /* eslint-disable camelcase */
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { space, color, themeGet } from 'styled-system';
+
 import { mediaScreen } from '../../theme';
 
 const LogoStyle = styled.h1`
