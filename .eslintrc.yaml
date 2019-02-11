@@ -6,12 +6,15 @@ extends:
   - prettier/react
   - plugin:import/errors
   - plugin:import/warnings
+  - plugin:jest/recommended
 
 plugins:
   - react-hooks
+  - jest
 
 env:
-  'browser': true
+  browser: true
+  jest/globals: true
 
 rules:
   no-unused-expressions: ['error', { 'allowTaggedTemplates': true }]
