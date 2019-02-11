@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, mapProps } from 'recompose';
 import Img from 'gatsby-image';
 import { Link, graphql } from 'gatsby';
-import { pipe, tap } from 'rambda';
 import styled, { css } from 'styled-components';
 import { themeGet } from 'styled-system';
 
 import { mapGalleryImagesGraphQLResponse } from 'utils/mappings';
-import { nextStepper } from 'utils/gallery-navigation';
-import { useInterval } from 'utils/hooks';
+import { useInterval, useGallery } from 'utils/hooks';
 import { imageType, locationType } from 'utils/types';
 import { ContentContainer, Layout, Logo } from 'components';
 
@@ -105,11 +103,7 @@ const Footer = styled.div`
 export const IMAGE_DISPLAY_DURATION = 5000;
 
 export const IndexPage = ({ images, location }) => {
-  const [imageIndex, setImageIndex] = useState(0);
-  const next = pipe(
-    nextStepper(imageIndex, images.length),
-    tap(setImageIndex)
-  );
+  const { imageIndex, next } = useGallery({ total: images.length });
 
   useInterval(() => next(imageIndex), IMAGE_DISPLAY_DURATION);
 

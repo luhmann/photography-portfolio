@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Img from 'gatsby-image';
 import { graphql } from 'gatsby';
 import KeyHandler from 'react-key-handler';
-import { pipe, tap } from 'rambda';
 import { compose, mapProps } from 'recompose';
 import styled, { createGlobalStyle } from 'styled-components';
 import { themeGet } from 'styled-system';
 
 import { ReactComponent as PrevIcon } from 'assets/prev.svg';
 import { ReactComponent as NextIcon } from 'assets/next.svg';
-import { nextStepper, prevStepper } from 'utils/gallery-navigation';
 import { locationType, imageType } from 'utils/types';
+import { useGallery } from 'utils/hooks';
 import { ContentContainer, Layout } from 'components';
 import {
   mapGalleryImagesGraphQLResponse,
@@ -104,17 +103,7 @@ const StyledNextIcon = styled(NextIcon)`
 `;
 
 export const Gallery = ({ images, title, location }) => {
-  const [imageIndex, setImageIndex] = useState(0);
-
-  const next = pipe(
-    nextStepper(imageIndex, images.length),
-    tap(setImageIndex)
-  );
-
-  const prev = pipe(
-    prevStepper(imageIndex, images.length),
-    tap(setImageIndex)
-  );
+  const { imageIndex, next, prev } = useGallery({ total: images.length });
 
   return (
     <Layout location={location}>
