@@ -8,11 +8,27 @@ extends:
   - plugin:import/warnings
 
 plugins:
-  - react/hooks
+  - react-hooks
 
 env:
   'browser': true
+
 rules:
-  import/order: 2
   no-unused-expressions: ['error', { 'allowTaggedTemplates': true }]
   react-hooks/rules-of-hooks: 'error'
+  import/order:
+    - error
+    - groups:
+        - builtin
+        - external
+        - internal
+        - parent
+        - sibling
+        - index
+      newlines-between: always
+
+settings:
+  import/resolver:
+    node:
+      paths:
+        - src
