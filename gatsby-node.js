@@ -1,11 +1,18 @@
 const path = require('path');
 
-exports.createPages = ({ actions, graphql }) => {
-  const { createPage } = actions;
+const { pathOr, prop, ifElse, identity, has } = require('rambda');
 
-  const galleryTemplate = path.resolve(`src/templates/gallery.js`);
+const galleryTemplate = path.resolve(`src/templates/gallery.js`);
 
-  return graphql(`
+const pipe = (...fns) => input =>
+  fns.reduce((chain, func) => chain.then(func), Promise.resolve(input));
+
+// NOTE: does not guard against 0 args
+const unary = fn => (...args) => fn(args[0]);
+
+// NOTE: cannot be exported because of es6/common.js exports usage in `src` vs here
+const queryGalleries = graphql => () =>
+  graphql(`
     query GalleriesQuery {
       allGalleriesYaml(sort: { fields: [order] }) {
         edges {
@@ -16,27 +23,52 @@ exports.createPages = ({ actions, graphql }) => {
         }
       }
     }
-  `).then(result => {
-    if (result.errors) {
-      return Promise.reject(result.errors);
-    }
+  `);
 
-    result.data.allGalleriesYaml.edges.map(gallery => {
-      const {
-        node: { folderName, path },
-      } = gallery;
+const mapGalleriesToPage = galleries =>
+  galleries.map(gallery => {
+    const {
+      node: { folderName, path },
+    } = gallery;
 
-      createPage({
-        path,
-        component: galleryTemplate,
-        context: { folderName },
-      });
-
-      return gallery;
-    });
-
-    return Promise.resolve();
+    return {
+      path,
+      component: galleryTemplate,
+      context: { folderName },
+    };
   });
+
+const handleError = error => {
+  throw new Error(error);
+};
+
+const handleGraphQlQueryErrors = ifElse(
+  has('errors'),
+  pipe(
+    prop('errors'),
+    handleError
+  ),
+  identity
+);
+
+const getAllGalleriesAndImages = ({ graphql }) =>
+  pipe(
+    queryGalleries(graphql),
+    handleGraphQlQueryErrors,
+    pathOr([], 'data.allGalleriesYaml.edges'),
+    mapGalleriesToPage
+  );
+
+exports.createPages = async ({ actions, graphql }) => {
+  const { createPage } = actions;
+
+  try {
+    const galleries = await getAllGalleriesAndImages({ graphql })();
+
+    galleries.forEach(unary(createPage));
+  } catch (e) {
+    throw e;
+  }
 };
 
 exports.onCreateWebpackConfig = ({ actions }) => {
