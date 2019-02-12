@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { pipe, tap } from 'rambda';
+import { pipe, path, find, findIndex, equals, head, defaultTo } from 'rambda';
+import { navigate } from 'gatsby';
 
 import { nextStepper, prevStepper } from 'utils/gallery-navigation';
 
@@ -26,18 +27,48 @@ export function useInterval(callback, delay) {
   );
 }
 
-export function useGallery({ total, initialImageIndex = 0 }) {
-  const [imageIndex, setImageIndex] = useState(initialImageIndex);
+const getImageId = path('contentDigest');
+const getCurrentIndexById = id => images =>
+  findIndex(
+    pipe(
+      getImageId,
+      equals(id)
+    )
+  )(images);
 
-  const next = pipe(
-    nextStepper(imageIndex, total),
-    tap(setImageIndex)
+export function useGallery({ images = [], initialId }) {
+  const total = images.length;
+  const verifiedInitialId = pipe(
+    find(
+      pipe(
+        getImageId,
+        equals(initialId)
+      )
+    ),
+    defaultTo(head(images)),
+    getImageId
+  )(images);
+  const [id, setId] = useState(verifiedInitialId);
+
+  useEffect(
+    () => {
+      setId(verifiedInitialId);
+    },
+    [verifiedInitialId]
   );
 
-  const prev = pipe(
-    prevStepper(imageIndex, total),
-    tap(setImageIndex)
-  );
+  if (total === 0) {
+    navigate('/404');
+    return {};
+  }
 
-  return { imageIndex, next, prev };
+  const getNextIndex = nextStepper(getCurrentIndexById(id)(images), total);
+  const getPrevIndex = prevStepper(getCurrentIndexById(id)(images), total);
+  const nextId = getImageId(images[getNextIndex()]);
+  const prevId = getImageId(images[getPrevIndex()]);
+
+  const next = () => setId(nextId);
+  const prev = () => setId(prevId);
+
+  return { next, prev, currentId: id, nextId, prevId };
 }

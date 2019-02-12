@@ -37,22 +37,27 @@ export const LayoutComponent = ({ children, albums, location }) => (
   <ThemeProvider theme={theme}>
     {/* NOTE: Fragment is important here otherwise the context-provider complains about multiple children */}
     <>
-      <Helmet>
-        <title>J F Dietrich Photography</title>
-        <meta
-          name="description"
-          content="Photography by Jan Florian Dietrich from Berlin, Germany"
-        />
-        <link
-          href="https://fonts.googleapis.com/css?family=Lora:700|Patua+One"
-          rel="stylesheet"
-        />
-        <link
-          href="/icons/icon-48x48.png"
-          rel="shortcut icon"
-          type="image/png"
-        />
-      </Helmet>
+      {/* TODO: convoluted helmet-syntax due to https://github.com/nfl/react-helmet/issues/373 */}
+      <Helmet
+        title="J F Dietrich Photography"
+        meta={[
+          {
+            name: 'description',
+            content: 'Photography by Jan Florian Dietrich from Berlin, Germany',
+          },
+        ]}
+        link={[
+          {
+            rel: 'stylesheet',
+            href: 'https://fonts.googleapis.com/css?family=Lora:700|Patua+One',
+          },
+          {
+            href: '/icons/icon-48x48.png',
+            rel: 'shortcut icon',
+            type: 'image/png',
+          },
+        ]}
+      />
       <RootPageStyle />
       <Background>
         {location.pathname === '/' ? null : <Header albums={albums} />}
