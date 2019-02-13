@@ -1,4 +1,4 @@
-# 💅 J F Dietrich Photography Portfolio Site
+# 🌁 J F Dietrich Photography Portfolio Site
 
 ## Install
 

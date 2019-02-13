@@ -35,7 +35,8 @@
     "develop": "gatsby develop",
     "start": "yarn develop",
     "format": "prettier --write 'src/**/*.js'",
-    "deploy": "yarn build && cli-confirm \"Do you really want to deploy (y)?\" && gsutil -m rsync -d -r -c public gs://www.jfdietrich.com",
+    "release": "bash config/release.sh",
+    "deploy": "yarn build && cli-confirm \"Do you really want to deploy (y)?\" && gsutil -m rsync -d -r -c public gs://www.jfdietrich.com && yarn release",
     "test": "jest"
   },
   "devDependencies": {
@@ -61,6 +62,7 @@
     "react-generate-props": "^0.5.0",
     "react-test-renderer": "^16.8.0",
     "react-testing-library": "^5.5.3",
+    "semver": "^5.6.0",
     "snapshot-diff": "^0.5.0"
   }
 }
