@@ -1,9 +1,9 @@
-import { path, pathOr, pipe } from 'rambda';
+import { path, pathOr, pipe, map } from 'rambda';
 
 const flattenAllGalleriesGraphQLResponse = response =>
   response.map(({ fieldValue: albumTitle, edges: galleries }) => ({
     albumTitle,
-    galleries: galleries.map(gallery => gallery.node),
+    galleries: galleries.map(path('node')),
   }));
 
 export const mapAllGalleriesGraphQLResponse = pipe(
@@ -11,23 +11,17 @@ export const mapAllGalleriesGraphQLResponse = pipe(
   flattenAllGalleriesGraphQLResponse
 );
 
-const flattenGalleryImagesGraphQLResponse = response =>
-  response
-    .filter(item => item.node && item.node.childImageSharp)
-    .map(
-      ({
-        node: {
-          childImageSharp: {
-            fluid,
-            internal: { contentDigest },
-          },
-        },
-      }) => ({ fluid, contentDigest })
-    );
-
 export const mapGalleryImagesGraphQLResponse = pipe(
-  path('data.allFile.edges'),
-  flattenGalleryImagesGraphQLResponse
+  pathOr([], 'data.allFile.edges'),
+  map(
+    pipe(
+      pathOr([], 'node.childImageSharp'),
+      img => ({
+        fluid: img.fluid,
+        contentDigest: path('internal.contentDigest', img),
+      })
+    )
+  )
 );
 
 export const mapSingleGalleryYamlGraphQLResponse = path(
