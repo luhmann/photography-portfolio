@@ -77,7 +77,7 @@ LayoutComponent.displayName = 'LayoutComponent';
 
 const pageQuery = graphql`
   query GalleriesQuery {
-    ...allGalleriesYamlFragment
+    ...AllGalleriesYamlFragment
   }
 `;
 

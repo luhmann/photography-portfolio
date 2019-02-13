@@ -16,8 +16,8 @@ export const GalleryImagesFragment = graphql`
   }
 `;
 
-export const allGalleriesYamlFragment = graphql`
-  fragment allGalleriesYamlFragment on Query {
+export const AllGalleriesYamlFragment = graphql`
+  fragment AllGalleriesYamlFragment on Query {
     allGalleriesYaml(sort: { fields: [order] }) {
       group(field: album) {
         fieldValue
@@ -32,8 +32,8 @@ export const allGalleriesYamlFragment = graphql`
   }
 `;
 
-export const singleGalleryYamlFragment = graphql`
-  fragment singleGalleryYamlFragment on Query {
+export const SingleGalleryYamlFragment = graphql`
+  fragment SingleGalleryYamlFragment on Query {
     galleriesYaml(folderName: { eq: $folderName }) {
       title
     }

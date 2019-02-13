@@ -7,17 +7,14 @@ import KeyHandler from 'react-key-handler';
 import { compose, mapProps } from 'recompose';
 import styled, { createGlobalStyle } from 'styled-components';
 import { themeGet } from 'styled-system';
-import { pathOr, pipe, replace, path } from 'rambda';
+import { path } from 'rambda';
 
 import { ReactComponent as PrevIcon } from 'assets/prev.svg';
 import { ReactComponent as NextIcon } from 'assets/next.svg';
 import { locationType, imageType } from 'utils/types';
 import { useGallery } from 'utils/hooks';
 import { ContentContainer, Layout } from 'components';
-import {
-  mapGalleryImagesGraphQLResponse,
-  mapSingleGalleryYamlGraphQLResponse,
-} from 'utils/mappings';
+import { mapGalleryImagesGraphQLResponse } from 'utils/mappings';
 
 import { mediaScreen } from '../theme';
 
@@ -103,8 +100,8 @@ const StyledNextIcon = styled(NextIcon)`
   width: ${themeGet('space.5')};
 `;
 
-const getImageUrl = ({ pathname = '/portraits/', id }) =>
-  `${pathname}${id ? `#${id}` : ''}`;
+const getImageUrl = ({ pathname = '/portraits', id }) =>
+  `${pathname}/${id ? `${id}` : ''}`;
 
 export const Gallery = ({ images, title, location, pathname, initialId }) => {
   const { currentId, nextId, prevId } = useGallery({
@@ -158,8 +155,12 @@ Gallery.propTypes = {
   images: PropTypes.arrayOf(imageType).isRequired,
   title: PropTypes.string.isRequired,
   location: locationType.isRequired,
-  initialId: PropTypes.string.isRequired,
+  initialId: PropTypes.string,
   pathname: PropTypes.string.isRequired,
+};
+
+Gallery.defaultProps = {
+  initialId: undefined,
 };
 
 Gallery.displayName = 'Gallery';
@@ -168,18 +169,20 @@ export default compose(
   mapProps(props => ({
     ...props,
     images: mapGalleryImagesGraphQLResponse(props),
-    title: mapSingleGalleryYamlGraphQLResponse(props),
-    pathname: path('location.pathname')(props),
-    initialId: pipe(
-      pathOr('', 'location.hash'),
-      replace('#', '')
-    )(props),
+    title: path('pageContext.title', props),
+    pathname: path('pageContext.pathname', props),
+    initialId: path('pageContext.initialId', props),
   }))
 )(Gallery);
 
+/**
+ * NOTE: experimented with passing the `contentDigest`-ids here and getting them with `allImageSharp`
+ * in order to not query twice -> did not work because the correct ordering could not be applied
+ * without the relation to the filepath and manual ordering felt unexpected
+ */
 export const pageQuery = graphql`
   query Gallery($folderName: String!) {
-    ...singleGalleryYamlFragment
+    ...SingleGalleryYamlFragment
     allFile(
       filter: { relativeDirectory: { eq: $folderName } }
       sort: { fields: [relativePath] }
