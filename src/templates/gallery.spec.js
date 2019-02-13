@@ -32,7 +32,7 @@ beforeEach(() => {
   StaticQuery.mockImplementation(({ render }) => render({}));
 });
 
-test('should render all images', async () => {
+test('should render all images', () => {
   const props = createTestProps();
   const { getAllByAltText } = render(<Gallery {...props} />);
 
@@ -43,7 +43,7 @@ test('should render all images', async () => {
 
 // NOTE: because of styled components the difference is only visible in the classname
 // this should be resolved once we have a better snapshot-serializer for styled components
-test('should show the second image, when clicking next', async () => {
+test('should show the second image, when clicking next', () => {
   const props = createTestProps();
   const updatedProps = createTestProps({
     initialId: 'digest-2',

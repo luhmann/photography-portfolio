@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, act } from 'react-testing-library';
 import cases from 'jest-in-case';
+import { navigate } from 'gatsby';
 
 import { createImageTypeTestProps } from 'utils/types';
 
@@ -29,6 +30,10 @@ function setup(props) {
   );
   return returnVal;
 }
+
+beforeEach(() => {
+  navigate.mockClear();
+});
 
 cases(
   'useGallery',
@@ -93,3 +98,10 @@ cases(
     },
   }
 );
+
+test('should redirect to 404-page - when no images are passed', () => {
+  setup({ images: [] });
+
+  expect(navigate).toHaveBeenCalledTimes(1);
+  expect(navigate).toHaveBeenCalledWith('/404');
+});

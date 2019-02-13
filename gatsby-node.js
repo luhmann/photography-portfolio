@@ -10,7 +10,7 @@ const pipe = (...fns) => input =>
 // NOTE: does not guard against 0 args
 const unary = fn => (...args) => fn(args[0]);
 
-// NOTE: cannot be exported because of es6/common.js exports usage in `src` vs here
+// NOTE: cannot be pulled out and rused because of the diverging es6/common.js exports in `src` vs. here
 const queryGalleries = graphql => () =>
   graphql(`
     query GalleriesQuery {
@@ -66,8 +66,8 @@ exports.createPages = async ({ actions, graphql }) => {
     const galleries = await getAllGalleriesAndImages({ graphql })();
 
     galleries.forEach(unary(createPage));
-  } catch (e) {
-    throw e;
+  } catch (err) {
+    throw err;
   }
 };
 

@@ -22,14 +22,14 @@ const Image = styled.div`
     100% - ${themeGet('space.containerBorder')} -
       ${themeGet('space.containerBorder')}
   );
-  opacity: 1;
+  opacity: 0;
   transition: opacity 1s cubic-bezier(0.33, 0, 0.2, 1);
   position: absolute; /* NOTE: needed here because we need too stack the images for opacity */
 
   ${props =>
-    props.invisible &&
+    props.visible &&
     css`
-      opacity: 0;
+      opacity: 1;
     `};
 
   ${mediaScreen.md`
@@ -113,7 +113,7 @@ export const IndexPage = ({ images, location }) => {
         {images.map((image, index) => (
           <Image
             key={image.contentDigest}
-            invisible={currentId !== image.contentDigest}
+            visible={currentId === image.contentDigest}
           >
             <Img
               fluid={image.fluid}
