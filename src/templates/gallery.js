@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Img from 'gatsby-image';
-import { graphql } from 'gatsby';
+import { graphql, navigate, Link } from 'gatsby';
 import KeyHandler from 'react-key-handler';
 import { compose, mapProps } from 'recompose';
 import styled, { createGlobalStyle } from 'styled-components';
 import { themeGet } from 'styled-system';
+import { pathOr, pipe, replace, path } from 'rambda';
 
 import { ReactComponent as PrevIcon } from 'assets/prev.svg';
 import { ReactComponent as NextIcon } from 'assets/next.svg';
@@ -66,7 +67,7 @@ const Image = styled(Img).attrs(props => ({
   `};
 `;
 
-const Prev = styled.a`
+const Prev = styled(Link)`
   align-items: center;
   cursor: w-resize;
   display: flex;
@@ -102,25 +103,42 @@ const StyledNextIcon = styled(NextIcon)`
   width: ${themeGet('space.5')};
 `;
 
-export const Gallery = ({ images, title, location }) => {
-  const { imageIndex, next, prev } = useGallery({ total: images.length });
+const getImageUrl = ({ pathname = '/portraits/', id }) =>
+  `${pathname}${id ? `#${id}` : ''}`;
+
+export const Gallery = ({ images, title, location, pathname, initialId }) => {
+  const { currentId, nextId, prevId } = useGallery({
+    images,
+    initialId,
+  });
+
+  const prevUrl = useMemo(() => getImageUrl({ pathname, id: prevId }), [
+    prevId,
+  ]);
+  const nextUrl = useMemo(() => getImageUrl({ pathname, id: nextId }), [
+    nextId,
+  ]);
 
   return (
     <Layout location={location}>
       <GatsbyImageOverwriteStyles />
       <GalleryContainer>
-        <Helmet>
-          <title>{`${title} - JF Dietrich Photography`}</title>
-        </Helmet>
-        <KeyHandler keyValue="ArrowRight" onKeyHandle={next} />
-        <KeyHandler keyValue="ArrowLeft" onKeyHandle={prev} />
-        <Prev data-testid="gallery-prev" onClick={prev}>
+        <Helmet title={`${title} - JF Dietrich Photography`} />
+        <KeyHandler
+          keyValue="ArrowRight"
+          onKeyHandle={() => navigate(nextUrl)}
+        />
+        <KeyHandler
+          keyValue="ArrowLeft"
+          onKeyHandle={() => navigate(prevUrl)}
+        />
+        <Prev data-testid="gallery-prev" to={prevUrl}>
           <StyledPrevIcon />
         </Prev>
         {images.map((image, index) => (
           <Image
             key={image.contentDigest}
-            visible={imageIndex === index}
+            visible={currentId === image.contentDigest}
             fluid={image.fluid}
             alt={`Gallery ${title} - Image ${index + 1}`}
             imgStyle={{
@@ -128,7 +146,7 @@ export const Gallery = ({ images, title, location }) => {
             }}
           />
         ))}
-        <Next data-testid="gallery-next" onClick={next}>
+        <Next data-testid="gallery-next" to={nextUrl}>
           <StyledNextIcon />
         </Next>
       </GalleryContainer>
@@ -140,6 +158,8 @@ Gallery.propTypes = {
   images: PropTypes.arrayOf(imageType).isRequired,
   title: PropTypes.string.isRequired,
   location: locationType.isRequired,
+  initialId: PropTypes.string.isRequired,
+  pathname: PropTypes.string.isRequired,
 };
 
 Gallery.displayName = 'Gallery';
@@ -149,6 +169,11 @@ export default compose(
     ...props,
     images: mapGalleryImagesGraphQLResponse(props),
     title: mapSingleGalleryYamlGraphQLResponse(props),
+    pathname: path('location.pathname')(props),
+    initialId: pipe(
+      pathOr('', 'location.hash'),
+      replace('#', '')
+    )(props),
   }))
 )(Gallery);
 

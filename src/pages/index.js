@@ -22,14 +22,14 @@ const Image = styled.div`
     100% - ${themeGet('space.containerBorder')} -
       ${themeGet('space.containerBorder')}
   );
-  opacity: 1;
+  opacity: 0;
   transition: opacity 1s cubic-bezier(0.33, 0, 0.2, 1);
   position: absolute; /* NOTE: needed here because we need too stack the images for opacity */
 
   ${props =>
-    props.invisible &&
+    props.visible &&
     css`
-      opacity: 0;
+      opacity: 1;
     `};
 
   ${mediaScreen.md`
@@ -103,15 +103,18 @@ const Footer = styled.div`
 export const IMAGE_DISPLAY_DURATION = 5000;
 
 export const IndexPage = ({ images, location }) => {
-  const { imageIndex, next } = useGallery({ total: images.length });
+  const { currentId, next } = useGallery({ images });
 
-  useInterval(() => next(imageIndex), IMAGE_DISPLAY_DURATION);
+  useInterval(() => next(), IMAGE_DISPLAY_DURATION);
 
   return (
     <Layout location={location}>
       <ContentContainer>
         {images.map((image, index) => (
-          <Image key={image.contentDigest} invisible={index !== imageIndex}>
+          <Image
+            key={image.contentDigest}
+            visible={currentId === image.contentDigest}
+          >
             <Img
               fluid={image.fluid}
               alt={`Slideshow Image-${index + 1}`}

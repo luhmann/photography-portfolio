@@ -2,6 +2,7 @@ import { arrayOf, shape, string, number } from 'prop-types';
 
 export const locationType = shape({
   pathname: string.isRequired,
+  hash: string,
 });
 
 export const galleryInfoType = shape({

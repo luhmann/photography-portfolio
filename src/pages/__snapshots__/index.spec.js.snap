@@ -11,8 +11,8 @@ exports[`should advance to the next image 1`] = `
         class=\\"sc-bwzfXH iVSscL\\"
       >
         <div
--         class=\\"sc-gzVnrw iWwCWe\\"
-+         class=\\"sc-gzVnrw dUZMXS\\"
+-         class=\\"sc-gzVnrw eGhSyp\\"
++         class=\\"sc-gzVnrw bfIvDc\\"
         >
           <div
             class=\\" gatsby-image-wrapper\\"
@@ -24,8 +24,8 @@ exports[`should advance to the next image 1`] = `
           </div>
         </div>
         <div
--         class=\\"sc-gzVnrw dUZMXS\\"
-+         class=\\"sc-gzVnrw iWwCWe\\"
+-         class=\\"sc-gzVnrw bfIvDc\\"
++         class=\\"sc-gzVnrw eGhSyp\\"
         >
           <div
             class=\\" gatsby-image-wrapper\\"

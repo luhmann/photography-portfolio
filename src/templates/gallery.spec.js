@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, act } from 'react-testing-library';
+import { render } from 'react-testing-library';
 import generateProps from 'react-generate-props';
 import { StaticQuery } from 'gatsby';
 
@@ -32,7 +32,7 @@ beforeEach(() => {
   StaticQuery.mockImplementation(({ render }) => render({}));
 });
 
-test('should render all images', async () => {
+test('should render all images', () => {
   const props = createTestProps();
   const { getAllByAltText } = render(<Gallery {...props} />);
 
@@ -45,26 +45,30 @@ test('should render all images', async () => {
 // this should be resolved once we have a better snapshot-serializer for styled components
 test('should show the second image, when clicking next', () => {
   const props = createTestProps();
-  const { getByTestId, asFragment } = render(<Gallery {...props} />);
+  const updatedProps = createTestProps({
+    initialId: 'digest-2',
+  });
+  const { asFragment, rerender } = render(<Gallery {...props} />);
 
   const firstRender = asFragment();
 
-  act(() => {
-    fireEvent.click(getByTestId(testSelectors.testIdNextButton));
-  });
+  // NOTE: not optimal way of testing this, but as we are relying on real navigation for this the props will come from the outside
+  // it would be better to do this by wrapping it in the reach-router-provider but as that is hidden by gatsby it will be fiddly
+  rerender(<Gallery {...updatedProps} />);
 
   expect(firstRender).toMatchDiffSnapshot(asFragment());
 });
 
 test('should show last image, when clicking prev', () => {
   const props = createTestProps();
-  const { getByTestId, asFragment } = render(<Gallery {...props} />);
+  const updatedProps = createTestProps({
+    initialId: 'digest-7',
+  });
+  const { rerender, asFragment } = render(<Gallery {...props} />);
 
   const firstRender = asFragment();
 
-  act(() => {
-    fireEvent.click(getByTestId(testSelectors.testIdPrevButton));
-  });
+  rerender(<Gallery {...updatedProps} />);
 
   expect(firstRender).toMatchDiffSnapshot(asFragment());
 });

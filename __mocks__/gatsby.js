@@ -4,6 +4,7 @@ const gatsby = jest.requireActual('gatsby');
 module.exports = {
   ...gatsby,
   graphql: jest.fn(),
+  navigate: jest.fn(),
   Link: jest.fn().mockImplementation(({ to, ...rest }) =>
     React.createElement('a', {
       ...rest,
