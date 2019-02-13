@@ -2,7 +2,7 @@
 
 ## Install
 
-We use a submodule for our assets so clone with `--recursive`
+We use a private submodule for our assets so clone with `--recursive`
 
 ```sh
 $ git clone --recursive git@github.com:luhmann/photography-portfolio.git
@@ -66,6 +66,8 @@ $ yarn test
 ```
 
 ## Deploy
+
+Before you deploy make sure to build the project and test it on a local http-server. What you see in `gatsby develop` is not necessarily how it works in what `gatsby build` generates.
 
 Install gsutil and setup:
 

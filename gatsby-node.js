@@ -32,7 +32,7 @@ const mapGalleriesToPage = galleries =>
     } = gallery;
 
     return {
-      path,
+      path: `${path}/*`,
       component: galleryTemplate,
       context: { folderName },
     };
