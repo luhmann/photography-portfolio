@@ -28,31 +28,19 @@ const GalleryContainer = styled(ContentContainer)`
   `};
 `;
 
-// NOTE: the introduction of global classes is unfortunate here,
-// but unavoidable because of the API the `gatsby-image`-component exposes
-// it allows to pass `className` which styles the inner of the two divs the component renders
-// it allows to pass `outerClassName` which styles the outer image wrapper
-// for use with styled-components it would be preferrable if there was `className` and `innerClassName`
-// because with styled-components (and css) we only can easily stile "downwards" into the DOM tree
-// to work around this we define a global classname and apply it conditionally
-const outerWrapperHiddenClassName = 'outerWrapper-hidden';
+/**
+ * gatsby does not apply the same styles to the img-tags and the noscript-img-tags
+ * we overwrite the style here with a global style
+ * check if the styles are still separate
+ * @see https://github.com/gatsbyjs/gatsby/blob/67c0131a0dbaac4d9b535197f70bcbde0f37f49c/packages/gatsby-image/src/index.js#L94
+ */
 const GatsbyImageOverwriteStyles = createGlobalStyle`
-  .gatsby-image-outer-wrapper {
-    width: 100%;
-    height: 100%;
-  }
-
-  .${outerWrapperHiddenClassName} {
-    display: none;
-    ${mediaScreen.md`
-      display: block;
-    `};
+  .gatsby-image-wrapper noscript img {
+    object-fit: contain !important;
   }
 `;
 
-const Image = styled(Img).attrs(props => ({
-  outerWrapperClassName: props.visible ? null : outerWrapperHiddenClassName,
-}))`
+const Image = styled(Img)`
   align-items: center;
   display: ${props => (props.visible ? 'flex' : 'none')};
   height: 100%;
@@ -139,6 +127,7 @@ export const Gallery = ({ images, title, location, pathname, initialId }) => {
             fluid={image.fluid}
             alt={`Gallery ${title} - Image ${index + 1}`}
             imgStyle={{
+              // should be the same as the one in the noscript-overwrite above
               objectFit: 'contain',
             }}
           />
