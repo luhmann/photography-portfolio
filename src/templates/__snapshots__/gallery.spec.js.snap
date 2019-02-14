@@ -11,8 +11,8 @@ exports[`should show last image, when clicking prev 1`] = `
         <a
           class=\\"sc-dnqmqq kFbRKc\\"
           data-testid=\\"gallery-prev\\"
--         href=\\"pathname#digest-7\\"
-+         href=\\"pathname#digest-6\\"
+-         href=\\"pathname/digest-7\\"
++         href=\\"pathname/digest-6\\"
         >
           <svg
             class=\\"sc-gZMcBi cxRXTt\\"
@@ -45,8 +45,8 @@ exports[`should show last image, when clicking prev 1`] = `
         <a
           class=\\"sc-dnqmqq sc-iwsKbI jwjenV\\"
           data-testid=\\"gallery-next\\"
--         href=\\"pathname#digest-2\\"
-+         href=\\"pathname#digest-1\\"
+-         href=\\"pathname/digest-2\\"
++         href=\\"pathname/digest-1\\"
         >
           <svg
             class=\\"sc-gqjmRU fOxXHI\\"
@@ -65,8 +65,8 @@ exports[`should show the second image, when clicking next 1`] = `
         <a
           class=\\"sc-dnqmqq kFbRKc\\"
           data-testid=\\"gallery-prev\\"
--         href=\\"pathname#digest-7\\"
-+         href=\\"pathname#digest-1\\"
+-         href=\\"pathname/digest-7\\"
++         href=\\"pathname/digest-1\\"
         >
           <svg
             class=\\"sc-gZMcBi cxRXTt\\"
@@ -99,8 +99,8 @@ exports[`should show the second image, when clicking next 1`] = `
         <a
           class=\\"sc-dnqmqq sc-iwsKbI jwjenV\\"
           data-testid=\\"gallery-next\\"
--         href=\\"pathname#digest-2\\"
-+         href=\\"pathname#digest-3\\"
+-         href=\\"pathname/digest-2\\"
++         href=\\"pathname/digest-3\\"
         >
           <svg
             class=\\"sc-gqjmRU fOxXHI\\"
