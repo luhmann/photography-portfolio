@@ -117,7 +117,11 @@ export const Gallery = ({ images, title, location, pathname, initialId }) => {
           keyValue="ArrowLeft"
           onKeyHandle={() => navigate(prevUrl)}
         />
-        <Prev data-testid="gallery-prev" to={prevUrl}>
+        <Prev
+          data-testid="gallery-prev"
+          to={prevUrl}
+          aria-label="Previous Picture"
+        >
           <StyledPrevIcon />
         </Prev>
         {images.map((image, index) => (
@@ -132,7 +136,7 @@ export const Gallery = ({ images, title, location, pathname, initialId }) => {
             }}
           />
         ))}
-        <Next data-testid="gallery-next" to={nextUrl}>
+        <Next data-testid="gallery-next" to={nextUrl} aria-label="Next Picture">
           <StyledNextIcon />
         </Next>
       </GalleryContainer>
