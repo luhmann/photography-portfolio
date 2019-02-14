@@ -36,7 +36,7 @@
     "start": "yarn develop",
     "format": "prettier --write 'src/**/*.js'",
     "release": "bash config/release.sh",
-    "deploy": "yarn build && cli-confirm \"Do you really want to deploy (y)?\" && gsutil -m rsync -d -r -c public gs://www.jfdietrich.com && yarn release",
+    "deploy": "yarn test && yarn build && cli-confirm \"Do you really want to deploy (y)?\" && gsutil -m rsync -d -r -c public gs://www.jfdietrich.com && yarn release",
     "test": "jest"
   },
   "devDependencies": {
