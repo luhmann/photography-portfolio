@@ -6,9 +6,9 @@ import styled, { css } from 'styled-components';
 import { themeGet } from 'styled-system';
 
 import { albumInfoType } from 'utils/types';
+import { StyledLink } from 'components/';
 
 import { mediaInput, mediaScreen } from '../../theme';
-import { StyledLink } from '../';
 
 const Nav = styled.a`
   color: ${themeGet('colors.black')};
