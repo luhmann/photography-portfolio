@@ -45,6 +45,11 @@ export const LayoutComponent = ({ children, albums, location }) => (
             name: 'description',
             content: 'Photography by Jan Florian Dietrich from Berlin, Germany',
           },
+          {
+            name: 'viewport',
+            content:
+              'width=device-width, initial-scale=1, shrink-to-fit=no,maximum-scale=1',
+          },
         ]}
         link={[
           {
