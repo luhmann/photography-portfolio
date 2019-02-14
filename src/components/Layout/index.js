@@ -56,11 +56,6 @@ export const LayoutComponent = ({ children, albums, location }) => (
             rel: 'stylesheet',
             href: 'https://fonts.googleapis.com/css?family=Lora:700|Patua+One',
           },
-          {
-            href: '/icons/icon-48x48.png',
-            rel: 'shortcut icon',
-            type: 'image/png',
-          },
         ]}
       />
       <RootPageStyle />
