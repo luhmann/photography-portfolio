@@ -39,6 +39,13 @@ module.exports = {
         lang: 'en',
       },
     },
+    {
+      resolve: 'gatsby-plugin-webpack-bundle-analyzer',
+      options: {
+        production: true,
+        disable: true,
+      },
+    },
     // enable pwa
     /* eslint-disable camelcase */
     {
