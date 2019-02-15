@@ -131,17 +131,6 @@ const Menu = ({ albums }) => {
         data-testid="menu-slideout"
         visible={isOpen}
       >
-        {/* <StyledLink
-        to="/"
-        color="black"
-        fontFamily="body"
-        fontSize={['m', 'l']}
-        fontWeight="bold"
-        display="block"
-        mb={2}
-      >
-        Home
-      </StyledLink> */}
         {albums.map(album => (
           <React.Fragment key={album.albumTitle}>
             <Album data-testid="menu-album">{album.albumTitle}</Album>

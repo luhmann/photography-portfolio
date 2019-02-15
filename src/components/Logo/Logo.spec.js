@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-testing-library';
 
-import Logo from './';
+import Logo from './Logo';
 
 test('should render as expected', () => {
   const { container } = render(<Logo />);

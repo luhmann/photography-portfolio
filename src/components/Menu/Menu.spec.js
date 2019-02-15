@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from 'react-testing-library';
 
-import Menu from './';
+import Menu from './Menu';
 
 const createGallery = (title, path) => ({
   title,

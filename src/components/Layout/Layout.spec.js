@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-testing-library';
 import generateProps from 'react-generate-props';
 
-import { LayoutComponent } from './';
+import { LayoutComponent } from './Layout';
 
 const createTestProps = (custom = {}) => ({
   ...generateProps(LayoutComponent, { optional: true }),
