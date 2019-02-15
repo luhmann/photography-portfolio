@@ -15,6 +15,7 @@ export const RootPageStyle = createGlobalStyle`
     ${mediaScreen.md`
       height: auto;
       overflow: auto;
+      overflow-x: hidden;
     `}
   }
 
