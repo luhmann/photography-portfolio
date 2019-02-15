@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql, StaticQuery } from 'gatsby';
 import { Helmet } from 'react-helmet';
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 
 import { Background, Logo, Menu, StyledLink, RootPageStyle } from 'components/';
 import { mapAllGalleriesGraphQLResponse } from 'utils/mappings';
@@ -10,18 +10,13 @@ import { albumInfoType, locationType } from 'utils/types';
 
 import theme from '../../theme';
 
-const HeaderContainer = styled.div`
-  position: sticky;
-  top: 0;
-`;
-
 const Header = ({ albums }) => (
-  <HeaderContainer>
+  <>
     <StyledLink to="/" color="black">
       <Logo />
     </StyledLink>
     <Menu albums={albums} />
-  </HeaderContainer>
+  </>
 );
 
 Header.propTypes = {
