@@ -73,7 +73,7 @@ export const LayoutComponent = ({ children, albums, location }) => {
             {
               name: 'description',
               content:
-                'Photography by Jan Florian Dietrich from Berlin, Germany',
+                'Photographs by Jan Florian Dietrich from Berlin, Germany',
             },
             {
               name: 'viewport',
